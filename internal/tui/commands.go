@@ -70,6 +70,34 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 				m.SelectedTreemapIndex = (m.SelectedTreemapIndex - 1 + len(items)) % len(items)
 			}
 			return m, nil
+		case "l": // Zoom in
+			if len(items) > 0 && m.SelectedTreemapIndex >= 0 && m.SelectedTreemapIndex < len(items) {
+				sel := items[m.SelectedTreemapIndex]
+				if sel.isDir {
+					m.CurrentDir = sel.path
+					m.SelectedTreemapIndex = 0
+				}
+			}
+			return m, nil
+		case "h": // Zoom out
+			if m.CurrentDir != "" {
+				parent := filepath.Dir(m.CurrentDir)
+				if parent == "." || parent == "/" || parent == m.CurrentDir {
+					parent = ""
+				}
+				oldDir := m.CurrentDir
+				m.CurrentDir = parent
+
+				parentItems := m.getGroupedItems()
+				m.SelectedTreemapIndex = 0
+				for idx, pi := range parentItems {
+					if pi.path == oldDir {
+						m.SelectedTreemapIndex = idx
+						break
+					}
+				}
+			}
+			return m, nil
 		case "enter", "\n", "\r":
 			if len(items) > 0 && m.SelectedTreemapIndex >= 0 && m.SelectedTreemapIndex < len(items) {
 				sel := items[m.SelectedTreemapIndex]

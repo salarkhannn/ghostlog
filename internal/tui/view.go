@@ -361,7 +361,7 @@ func (m Model) renderTreemap(w, h int) string {
 	}
 	breadcrumb = lipgloss.NewStyle().Foreground(accent).Bold(true).Render(breadcrumb)
 
-	controls := dimStyle.Render("[Tab] Cycle | [Enter] Open | [Backspace] Up")
+	controls := dimStyle.Render("[Tab/H/L] Navigate | [Enter] Zoom In | [Backspace] Zoom Out")
 
 	gridH := h - 2
 	if gridH < 3 {

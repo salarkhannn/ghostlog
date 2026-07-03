@@ -176,7 +176,7 @@ func (m Model) renderTreemap(w, h int) string {
 		if chars < 1 {
 			chars = 1
 		}
-		color := fadeColor(c.LastTouched)
+		color := fadeColor(c.LastTouched, i)
 		style := lipgloss.NewStyle().Foreground(color)
 		
 		for i := 0; i < chars; i++ {
@@ -191,8 +191,10 @@ func (m Model) renderTreemap(w, h int) string {
 	return sb.String()
 }
 
-func fadeColor(lastTouched time.Time) lipgloss.Color {
-	baseColor := "#3a3a5a"
+func fadeColor(lastTouched time.Time, index int) lipgloss.Color {
+	baseColors := []string{"#3a3a5a", "#2d2d46", "#45456b", "#363654", "#292940"}
+	baseColor := baseColors[index%len(baseColors)]
+	
 	if lastTouched.IsZero() {
 		return lipgloss.Color(baseColor)
 	}
@@ -204,10 +206,14 @@ func fadeColor(lastTouched time.Time) lipgloss.Color {
 	if ratio < 0 {
 		ratio = 0
 	}
-	// Base RGB: R=58, G=58, B=90 (#3a3a5a)
+	
+	// Parse the base color hex string to RGB
+	var br, bg, bb int
+	fmt.Sscanf(baseColor, "#%02x%02x%02x", &br, &bg, &bb)
+	
 	// Highlight RGB: R=233, G=69, B=96 (#e94560)
-	r := int(58.0 + (233.0 - 58.0)*ratio)
-	g := int(58.0 + (69.0 - 58.0)*ratio)
-	b := int(90.0 + (96.0 - 90.0)*ratio)
+	r := int(float64(br) + (233.0 - float64(br))*ratio)
+	g := int(float64(bg) + (69.0 - float64(bg))*ratio)
+	b := int(float64(bb) + (96.0 - float64(bb))*ratio)
 	return lipgloss.Color(fmt.Sprintf("#%02x%02x%02x", r, g, b))
 }

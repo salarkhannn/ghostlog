@@ -17,6 +17,7 @@ type Burst struct {
 	LinesRemoved int
 	FilesChanged int
 	BytesAdded   int
+	HasConflict  bool
 }
 
 type Analyzer struct {
@@ -39,10 +40,14 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 	a.seenHashes[info.Hash] = struct{}{}
 
 	var added, removed, bytesAdded int
+	hasConflict := false
 	for _, d := range info.Diffs {
 		added += d.LinesAdded
 		removed += d.LinesRemoved
 		bytesAdded += d.Bytes
+		if d.HasConflict {
+			hasConflict = true
+		}
 	}
 	files := len(info.Diffs)
 	now := time.Now()
@@ -56,6 +61,9 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 			last.LinesRemoved += removed
 			last.FilesChanged += files
 			last.BytesAdded += bytesAdded
+			if hasConflict {
+				last.HasConflict = true
+			}
 			return a.bursts, true
 		}
 	}
@@ -70,6 +78,7 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 		LinesRemoved: removed,
 		FilesChanged: files,
 		BytesAdded:   bytesAdded,
+		HasConflict:  hasConflict,
 	}
 
 	if len(a.bursts) >= 100 {
@@ -79,6 +88,4 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 	return a.bursts, true
 }
 
-func (a *Analyzer) Bursts() []Burst {
-	return a.bursts
-}
+func (a *Analyzer) Bursts() []Burst { return a.bursts }

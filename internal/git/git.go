@@ -10,10 +10,11 @@ import (
 )
 
 type FileDiff struct {
-	Path         string
-	LinesAdded   int
+	Path        string
+	LinesAdded  int
 	LinesRemoved int
-	Bytes        int
+	Bytes       int
+	HasConflict bool
 }
 
 type CommitInfo struct {
@@ -31,14 +32,10 @@ func DiffTree(repoPath, hash string) (*CommitInfo, error) {
 
 	out, err := exec.Command("git", "-C", repoPath, "diff-tree", "--no-commit-id", "-p", "-r", hash).Output()
 	if err != nil {
-		return nil, fmt.Errorf("diff-tree %s: %w", shortHash(hash), err)
+		return nil, fmt.Errorf("diff-tree %s: %w", short(hash), err)
 	}
 
-	info := &CommitInfo{
-		Hash:  hash,
-		Short: shortHash(hash),
-		Diffs: parseDiff(out),
-	}
+	info := &CommitInfo{Hash: hash, Short: short(hash), Diffs: parseDiff(out)}
 	cache.Store(hash, info)
 	return info, nil
 }
@@ -52,7 +49,7 @@ func Show(repoPath string, hashes []string) (string, error) {
 	return string(out), nil
 }
 
-func shortHash(h string) string {
+func short(h string) string {
 	if len(h) > 8 {
 		return h[:8]
 	}
@@ -77,6 +74,9 @@ func parseDiff(data []byte) []FileDiff {
 		case cur != nil && strings.HasPrefix(line, "+") && !strings.HasPrefix(line, "+++"):
 			cur.LinesAdded++
 			cur.Bytes += len(line) - 1
+			if strings.HasPrefix(line, "+<<<<<<< ") {
+				cur.HasConflict = true
+			}
 		case cur != nil && strings.HasPrefix(line, "-") && !strings.HasPrefix(line, "---"):
 			cur.LinesRemoved++
 		}

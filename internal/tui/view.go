@@ -192,19 +192,22 @@ func (m Model) renderTreemap(w, h int) string {
 }
 
 func fadeColor(lastTouched time.Time) lipgloss.Color {
+	baseColor := "#3a3a5a"
 	if lastTouched.IsZero() {
-		return lipgloss.Color("#1a1a2e")
+		return lipgloss.Color(baseColor)
 	}
 	elapsed := time.Since(lastTouched).Seconds()
 	if elapsed > 2.0 {
-		return lipgloss.Color("#1a1a2e")
+		return lipgloss.Color(baseColor)
 	}
 	ratio := 1.0 - (elapsed / 2.0)
 	if ratio < 0 {
 		ratio = 0
 	}
-	r := int(26.0 + (233.0 - 26.0)*ratio)
-	g := int(26.0 + (69.0 - 26.0)*ratio)
-	b := int(46.0 + (96.0 - 46.0)*ratio)
+	// Base RGB: R=58, G=58, B=90 (#3a3a5a)
+	// Highlight RGB: R=233, G=69, B=96 (#e94560)
+	r := int(58.0 + (233.0 - 58.0)*ratio)
+	g := int(58.0 + (69.0 - 58.0)*ratio)
+	b := int(90.0 + (96.0 - 90.0)*ratio)
 	return lipgloss.Color(fmt.Sprintf("#%02x%02x%02x", r, g, b))
 }

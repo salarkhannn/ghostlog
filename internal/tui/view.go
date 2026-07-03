@@ -2,6 +2,7 @@ package tui
 
 import (
 	"fmt"
+	"math"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -166,12 +167,82 @@ func fmtDuration(d time.Duration) string {
 	return fmt.Sprintf("%02d:%02d:%02d", h, m, s)
 }
 
+type treemapItem struct {
+	path        string
+	name        string
+	isDir       bool
+	lines       int
+	lastTouched time.Time
+}
+
+func (m Model) getGroupedItems() []*treemapItem {
+	groups := make(map[string]*treemapItem)
+	prefix := m.CurrentDir
+	if prefix != "" && !strings.HasSuffix(prefix, "/") {
+		prefix += "/"
+	}
+
+	for _, c := range m.Treemap {
+		if prefix != "" && !strings.HasPrefix(c.Path, prefix) {
+			continue
+		}
+
+		rel := c.Path[len(prefix):]
+		parts := strings.Split(rel, "/")
+		childName := parts[0]
+		if childName == "" {
+			continue
+		}
+
+		fullChildPath := childName
+		if m.CurrentDir != "" {
+			fullChildPath = filepath.Join(m.CurrentDir, childName)
+		}
+
+		isDir := len(parts) > 1
+
+		item, exists := groups[childName]
+		if !exists {
+			item = &treemapItem{
+				path:        fullChildPath,
+				name:        childName,
+				isDir:       isDir,
+				lines:       0,
+				lastTouched: c.LastTouched,
+			}
+			groups[childName] = item
+		}
+
+		item.lines += c.Lines
+		if c.LastTouched.After(item.lastTouched) {
+			item.lastTouched = c.LastTouched
+		}
+		if isDir {
+			item.isDir = true
+		}
+	}
+
+	var items []*treemapItem
+	for _, item := range groups {
+		items = append(items, item)
+	}
+
+	sort.Slice(items, func(i, j int) bool {
+		return items[i].lines > items[j].lines
+	})
+
+	return items
+}
+
 type treemapBox struct {
 	path        string
+	name        string
+	isDir       bool
 	lines       int
 	lastTouched time.Time
 	colorIndex  int
 	x, y, w, h  int
+	weight      float64
 }
 
 func partition(boxes []*treemapBox, x, y, w, h int) {
@@ -186,19 +257,19 @@ func partition(boxes []*treemapBox, x, y, w, h int) {
 		return
 	}
 
-	total := 0
+	total := 0.0
 	for _, b := range boxes {
-		total += b.lines
+		total += b.weight
 	}
 	if total == 0 {
 		for _, b := range boxes {
-			b.lines = 1
+			b.weight = 1.0
 		}
-		total = len(boxes)
+		total = float64(len(boxes))
 	}
 
-	firstWeight := boxes[0].lines
-	ratio := float64(firstWeight) / float64(total)
+	firstWeight := boxes[0].weight
+	ratio := firstWeight / total
 
 	if float64(w) > 2.0*float64(h) {
 		splitW := int(float64(w) * ratio)
@@ -233,23 +304,52 @@ func (m Model) renderTreemap(w, h int) string {
 		return dimStyle.Render("Loading treemap...")
 	}
 
-	boxes := make([]*treemapBox, len(m.Treemap))
-	for i, cell := range m.Treemap {
+	grouped := m.getGroupedItems()
+	if len(grouped) == 0 {
+		return dimStyle.Render("Empty directory.\n[Backspace] Go back")
+	}
+
+	selIdx := m.SelectedTreemapIndex
+	if selIdx >= len(grouped) {
+		selIdx = len(grouped) - 1
+	}
+	if selIdx < 0 {
+		selIdx = 0
+	}
+
+	boxes := make([]*treemapBox, len(grouped))
+	for i, item := range grouped {
+		weight := math.Log2(float64(item.lines) + 1.0)
+		if weight < 1.0 {
+			weight = 1.0
+		}
 		boxes[i] = &treemapBox{
-			path:        cell.Path,
-			lines:       cell.Lines,
-			lastTouched: cell.LastTouched,
+			path:        item.path,
+			name:        item.name,
+			isDir:       item.isDir,
+			lines:       item.lines,
+			lastTouched: item.lastTouched,
 			colorIndex:  i,
+			weight:      weight,
 		}
 	}
 
-	sort.Slice(boxes, func(i, j int) bool {
-		return boxes[i].lines > boxes[j].lines
-	})
+	breadcrumb := "📁 [root]"
+	if m.CurrentDir != "" {
+		breadcrumb = "📁 " + strings.ReplaceAll(m.CurrentDir, "/", " > ")
+	}
+	breadcrumb = lipgloss.NewStyle().Foreground(accent).Bold(true).Render(breadcrumb)
 
-	partition(boxes, 0, 0, w, h)
+	controls := dimStyle.Render("[Tab] Cycle | [Enter] Open | [Backspace] Up")
 
-	grid := make([][]cell, h)
+	gridH := h - 2
+	if gridH < 3 {
+		gridH = 3
+	}
+
+	partition(boxes, 0, 0, w, gridH)
+
+	grid := make([][]cell, gridH)
 	for i := range grid {
 		grid[i] = make([]cell, w)
 		for j := range grid[i] {
@@ -258,18 +358,32 @@ func (m Model) renderTreemap(w, h int) string {
 	}
 
 	draw := func(cx, cy int, r rune, style lipgloss.Style) {
-		if cx >= 0 && cx < w && cy >= 0 && cy < h {
+		if cx >= 0 && cx < w && cy >= 0 && cy < gridH {
 			grid[cy][cx] = cell{char: r, style: style}
 		}
 	}
 
-	for _, box := range boxes {
+	for i, box := range boxes {
 		if box.w <= 0 || box.h <= 0 {
 			continue
 		}
 
+		isSel := i == selIdx
 		color := fadeColor(box.lastTouched, box.colorIndex)
-		borderStyle := lipgloss.NewStyle().Foreground(color)
+
+		var borderStyle lipgloss.Style
+		if isSel {
+			borderStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#00f0ff")).Bold(true)
+		} else {
+			borderStyle = lipgloss.NewStyle().Foreground(color)
+		}
+
+		var topL, topR, botL, botR, horiz, vert rune
+		if isSel {
+			topL, topR, botL, botR, horiz, vert = '╔', '╗', '╚', '╝', '═', '║'
+		} else {
+			topL, topR, botL, botR, horiz, vert = '┌', '┐', '└', '┘', '─', '│'
+		}
 
 		for cy := box.y; cy < box.y+box.h; cy++ {
 			for cx := box.x; cx < box.x+box.w; cx++ {
@@ -279,24 +393,27 @@ func (m Model) renderTreemap(w, h int) string {
 				isRight := cx == box.x+box.w-1
 
 				if isTop && isLeft {
-					draw(cx, cy, '┌', borderStyle)
+					draw(cx, cy, topL, borderStyle)
 				} else if isTop && isRight {
-					draw(cx, cy, '┐', borderStyle)
+					draw(cx, cy, topR, borderStyle)
 				} else if isBottom && isLeft {
-					draw(cx, cy, '└', borderStyle)
+					draw(cx, cy, botL, borderStyle)
 				} else if isBottom && isRight {
-					draw(cx, cy, '┘', borderStyle)
+					draw(cx, cy, botR, borderStyle)
 				} else if isTop || isBottom {
-					draw(cx, cy, '─', borderStyle)
+					draw(cx, cy, horiz, borderStyle)
 				} else if isLeft || isRight {
-					draw(cx, cy, '│', borderStyle)
+					draw(cx, cy, vert, borderStyle)
 				}
 			}
 		}
 
 		availableWidth := box.w - 2
 		if availableWidth > 0 && box.h >= 3 {
-			label := filepath.Base(box.path)
+			label := box.name
+			if box.isDir {
+				label += "/"
+			}
 			if len(label) > availableWidth {
 				if availableWidth > 3 {
 					label = label[:availableWidth-3] + "..."
@@ -311,23 +428,25 @@ func (m Model) renderTreemap(w, h int) string {
 			}
 
 			var textStyle lipgloss.Style
-			if !box.lastTouched.IsZero() && time.Since(box.lastTouched).Seconds() < 2.0 {
+			if isSel {
+				textStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#ffffff")).Bold(true)
+			} else if !box.lastTouched.IsZero() && time.Since(box.lastTouched).Seconds() < 2.0 {
 				textStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#ffffff")).Bold(true)
 			} else {
 				textStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#a0a0c0"))
 			}
 
 			startX := box.x + (box.w-len(label))/2
-			for i, r := range label {
-				draw(startX+i, centerY, r, textStyle)
+			for idx, r := range label {
+				draw(startX+idx, centerY, r, textStyle)
 			}
 
 			if box.h >= 4 {
 				linesLabel := fmt.Sprintf("%d L", box.lines)
 				if len(linesLabel) <= availableWidth {
 					startLinesX := box.x + (box.w-len(linesLabel))/2
-					for i, r := range linesLabel {
-						draw(startLinesX+i, centerY+1, r, textStyle)
+					for idx, r := range linesLabel {
+						draw(startLinesX+idx, centerY+1, r, textStyle)
 					}
 				}
 			}
@@ -335,7 +454,10 @@ func (m Model) renderTreemap(w, h int) string {
 	}
 
 	var sb strings.Builder
-	for i, row := range grid {
+	sb.WriteString(breadcrumb)
+	sb.WriteRune('\n')
+
+	for _, row := range grid {
 		for _, cell := range row {
 			if cell.char == ' ' {
 				sb.WriteRune(' ')
@@ -343,11 +465,10 @@ func (m Model) renderTreemap(w, h int) string {
 				sb.WriteString(cell.style.Render(string(cell.char)))
 			}
 		}
-		if i < len(grid)-1 {
-			sb.WriteRune('\n')
-		}
+		sb.WriteRune('\n')
 	}
 
+	sb.WriteString(controls)
 	return sb.String()
 }
 

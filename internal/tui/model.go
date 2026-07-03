@@ -43,7 +43,9 @@ type Model struct {
 	width   int
 	height  int
 
-	lastTouchedMap map[string]time.Time
+	lastTouchedMap       map[string]time.Time
+	CurrentDir           string
+	SelectedTreemapIndex int
 }
 
 func New(repoPath string, ch <-chan watcher.CommitMsg) Model {

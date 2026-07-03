@@ -228,6 +228,12 @@ func (m Model) getGroupedItems() []*treemapItem {
 	}
 
 	sort.Slice(items, func(i, j int) bool {
+		if items[i].lines == items[j].lines {
+			if items[i].isDir != items[j].isDir {
+				return items[i].isDir
+			}
+			return items[i].name < items[j].name
+		}
 		return items[i].lines > items[j].lines
 	})
 

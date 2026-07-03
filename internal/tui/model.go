@@ -1,6 +1,10 @@
 package tui
 
 import (
+	"bytes"
+	"fmt"
+	"os/exec"
+	"path/filepath"
 	"time"
 
 	"github.com/charmbracelet/bubbles/viewport"
@@ -12,6 +16,12 @@ import (
 
 type tickMsg time.Time
 
+type TreemapCell struct {
+	Path        string
+	Lines       int
+	LastTouched time.Time
+}
+
 type Model struct {
 	repoPath           string
 	commitCh           <-chan watcher.CommitMsg
@@ -19,6 +29,9 @@ type Model struct {
 	Bursts             []analyzer.Burst
 	SelectedBurstIndex int
 	AutoScroll         bool
+	ViewMode           string // "burst" or "treemap"
+	Treemap            []*TreemapCell
+	TotalLines         int
 	CPSMetric          float64
 	sessionStart       time.Time
 	commitTimestamps   []time.Time
@@ -37,12 +50,46 @@ func New(repoPath string, ch <-chan watcher.CommitMsg) Model {
 		commitCh:     ch,
 		az:           analyzer.New(repoPath),
 		AutoScroll:   true,
+		ViewMode:     "burst",
 		sessionStart: time.Now(),
 	}
 }
 
+type treemapMsg []*TreemapCell
+
 func (m Model) Init() tea.Cmd {
-	return tea.Batch(watcher.WaitForCommit(m.commitCh), tickCmd())
+	return tea.Batch(
+		watcher.WaitForCommit(m.commitCh),
+		tickCmd(),
+		m.loadTreemap(),
+	)
+}
+
+func (m Model) loadTreemap() tea.Cmd {
+	return func() tea.Msg {
+		out, err := exec.Command("git", "-C", m.repoPath, "ls-files").Output()
+		if err != nil {
+			return treemapMsg{}
+		}
+		var cells []*TreemapCell
+		lines := bytes.Split(out, []byte("\n"))
+		for _, l := range lines {
+			if len(l) == 0 {
+				continue
+			}
+			path := string(l)
+			wc, err := exec.Command("wc", "-l", filepath.Join(m.repoPath, path)).Output()
+			if err != nil {
+				continue
+			}
+			var count int
+			fmt.Sscanf(string(wc), "%d", &count)
+			if count > 0 {
+				cells = append(cells, &TreemapCell{Path: path, Lines: count})
+			}
+		}
+		return treemapMsg(cells)
+	}
 }
 
 func tickCmd() tea.Cmd {
@@ -51,6 +98,13 @@ func tickCmd() tea.Cmd {
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
+	case treemapMsg:
+		m.Treemap = msg
+		for _, c := range m.Treemap {
+			m.TotalLines += c.Lines
+		}
+		return m, nil
+
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
 		m.height = msg.Height
@@ -83,6 +137,11 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			for _, d := range info.Diffs {
 				m.totalAdded += d.LinesAdded
 				m.totalRemoved += d.LinesRemoved
+				for _, cell := range m.Treemap {
+					if cell.Path == d.Path {
+						cell.LastTouched = time.Now()
+					}
+				}
 			}
 			if m.AutoScroll {
 				m.SelectedBurstIndex = len(m.Bursts) - 1

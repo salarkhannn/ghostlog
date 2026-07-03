@@ -40,6 +40,13 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 			copyToClipboard(strings.Join(m.Bursts[m.SelectedBurstIndex].Hashes, " "))
 		}
 
+	case "v":
+		if m.ViewMode == "treemap" {
+			m.ViewMode = "burst"
+		} else {
+			m.ViewMode = "treemap"
+		}
+
 	default:
 		var cmd tea.Cmd
 		m.vp, cmd = m.vp.Update(msg)

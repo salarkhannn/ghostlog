@@ -66,10 +66,18 @@ func (m Model) View() string {
 	leftW := m.width * 40 / 100
 	rightW := m.width - leftW
 
-	left := paneStyle.
-		Width(leftW - 2).
-		Height(contentH - 2).
-		Render(m.renderBurstList(leftW - 4))
+	var left string
+	if m.ViewMode == "treemap" {
+		left = paneStyle.
+			Width(leftW - 2).
+			Height(contentH - 2).
+			Render(m.renderTreemap(leftW-4, contentH-4))
+	} else {
+		left = paneStyle.
+			Width(leftW - 2).
+			Height(contentH - 2).
+			Render(m.renderBurstList(leftW - 4))
+	}
 
 	right := paneStyle.
 		Width(rightW - 2).
@@ -154,4 +162,45 @@ func fmtDuration(d time.Duration) string {
 	m := int(d.Minutes()) % 60
 	s := int(d.Seconds()) % 60
 	return fmt.Sprintf("%02d:%02d:%02d", h, m, s)
+}
+
+func (m Model) renderTreemap(w, h int) string {
+	if m.TotalLines == 0 || len(m.Treemap) == 0 {
+		return dimStyle.Render("Loading treemap...")
+	}
+	totalChars := w * h
+	var sb strings.Builder
+	for _, c := range m.Treemap {
+		chars := int(float64(c.Lines) / float64(m.TotalLines) * float64(totalChars))
+		if chars < 1 {
+			chars = 1
+		}
+		color := fadeColor(c.LastTouched)
+		style := lipgloss.NewStyle().Foreground(color)
+		block := style.Render(strings.Repeat("█", chars))
+		sb.WriteString(block)
+	}
+	// The output might exceed the box due to rounding and minimum 1 char. 
+	// We just truncate the final string to totalChars (ignoring ansi codes is hard, so we just let lipgloss clip it)
+	// Actually lipgloss handles overflow in paneStyle, but to avoid breaking layout we can do a simple chunking.
+	// We can use lipgloss width/height constraints.
+	return sb.String()
+}
+
+func fadeColor(lastTouched time.Time) lipgloss.Color {
+	if lastTouched.IsZero() {
+		return lipgloss.Color("#1a1a2e")
+	}
+	elapsed := time.Since(lastTouched).Seconds()
+	if elapsed > 2.0 {
+		return lipgloss.Color("#1a1a2e")
+	}
+	ratio := 1.0 - (elapsed / 2.0)
+	if ratio < 0 {
+		ratio = 0
+	}
+	r := int(26.0 + (233.0 - 26.0)*ratio)
+	g := int(26.0 + (69.0 - 26.0)*ratio)
+	b := int(46.0 + (96.0 - 46.0)*ratio)
+	return lipgloss.Color(fmt.Sprintf("#%02x%02x%02x", r, g, b))
 }

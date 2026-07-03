@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/charmbracelet/bubbletea"
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/fsnotify/fsnotify"
 )
 
@@ -34,10 +34,9 @@ func New(repoPath string, ch chan<- CommitMsg) (*Watcher, error) {
 	}
 
 	gitDir := filepath.Join(repoPath, ".git")
-	for _, sub := range []string{"", "logs", "refs", "refs/heads"} {
+	for _, sub := range []string{"", "logs", "logs/refs", "logs/refs/heads", "refs", "refs/heads"} {
 		_ = fw.Add(filepath.Join(gitDir, sub))
 	}
-	_ = fw.Add(filepath.Join(gitDir, "logs", "refs", "heads"))
 
 	return &Watcher{
 		fw:       fw,
@@ -47,9 +46,7 @@ func New(repoPath string, ch chan<- CommitMsg) (*Watcher, error) {
 	}, nil
 }
 
-func (w *Watcher) Start() {
-	go w.loop()
-}
+func (w *Watcher) Start() { go w.loop() }
 
 func (w *Watcher) Stop() {
 	close(w.done)
@@ -66,7 +63,7 @@ func (w *Watcher) loop() {
 				return
 			}
 			if isRelevant(ev) {
-				w.scheduleRead()
+				w.arm()
 			}
 		case _, ok := <-w.fw.Errors:
 			if !ok {
@@ -76,7 +73,7 @@ func (w *Watcher) loop() {
 	}
 }
 
-func (w *Watcher) scheduleRead() {
+func (w *Watcher) arm() {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 
@@ -105,9 +102,7 @@ func (w *Watcher) scheduleRead() {
 }
 
 func WaitForCommit(ch <-chan CommitMsg) tea.Cmd {
-	return func() tea.Msg {
-		return <-ch
-	}
+	return func() tea.Msg { return <-ch }
 }
 
 func isRelevant(e fsnotify.Event) bool {

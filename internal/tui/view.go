@@ -171,7 +171,7 @@ func (m Model) renderTreemap(w, h int) string {
 	totalChars := w * h
 	var sb strings.Builder
 	currentCol := 0
-	for _, c := range m.Treemap {
+	for i, c := range m.Treemap {
 		chars := int(float64(c.Lines) / float64(m.TotalLines) * float64(totalChars))
 		if chars < 1 {
 			chars = 1

@@ -1,8 +1,10 @@
 package watcher
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 	"time"
 
@@ -32,18 +34,22 @@ func New(repoPath string) (*Watcher, error) {
 		return nil, err
 	}
 
-	refsDir := filepath.Join(repoPath, ".git", "refs")
-	if err := addRecursive(fw, refsDir); err != nil {
+	gitDir := filepath.Join(repoPath, ".git")
+	if _, err := os.Stat(filepath.Join(gitDir, "HEAD")); err != nil {
 		fw.Close()
-		return nil, err
+		return nil, fmt.Errorf("%s is not a git repository", repoPath)
 	}
 
-	headFile := filepath.Join(repoPath, ".git", "HEAD")
-	if _, err := os.Stat(headFile); err == nil {
-		if err := fw.Add(filepath.Join(repoPath, ".git")); err != nil {
+	for _, sub := range []string{"refs", "logs"} {
+		if err := addRecursive(fw, filepath.Join(gitDir, sub)); err != nil {
 			fw.Close()
 			return nil, err
 		}
+	}
+
+	if err := fw.Add(gitDir); err != nil {
+		fw.Close()
+		return nil, err
 	}
 
 	return &Watcher{
@@ -110,10 +116,16 @@ func (w *Watcher) debounce() {
 }
 
 func isRelevant(e fsnotify.Event) bool {
-	if e.Has(fsnotify.Write) || e.Has(fsnotify.Create) {
-		base := filepath.Base(e.Name)
-		return base == "HEAD" || base == "ORIG_HEAD" || base == "MERGE_HEAD" ||
-			filepath.Dir(e.Name) != e.Name
+	if !e.Has(fsnotify.Write) && !e.Has(fsnotify.Create) {
+		return false
+	}
+	base := filepath.Base(e.Name)
+	switch base {
+	case "HEAD", "ORIG_HEAD", "MERGE_HEAD", "COMMIT_EDITMSG":
+		return true
+	}
+	if strings.Contains(e.Name, ".git/logs/") || strings.Contains(e.Name, ".git/refs/") {
+		return true
 	}
 	return false
 }

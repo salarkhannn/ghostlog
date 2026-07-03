@@ -21,6 +21,11 @@ func main() {
 		os.Exit(1)
 	}
 
+	if _, err := os.Stat(filepath.Join(abs, ".git", "HEAD")); err != nil {
+		fmt.Fprintf(os.Stderr, "ghostlog: %s is not a git repository\n", abs)
+		os.Exit(1)
+	}
+
 	ch := make(chan watcher.CommitMsg, 32)
 	w, err := watcher.New(abs, ch)
 	if err != nil {

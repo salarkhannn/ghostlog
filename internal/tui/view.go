@@ -170,6 +170,7 @@ func (m Model) renderTreemap(w, h int) string {
 	}
 	totalChars := w * h
 	var sb strings.Builder
+	currentCol := 0
 	for _, c := range m.Treemap {
 		chars := int(float64(c.Lines) / float64(m.TotalLines) * float64(totalChars))
 		if chars < 1 {
@@ -177,13 +178,16 @@ func (m Model) renderTreemap(w, h int) string {
 		}
 		color := fadeColor(c.LastTouched)
 		style := lipgloss.NewStyle().Foreground(color)
-		block := style.Render(strings.Repeat("█", chars))
-		sb.WriteString(block)
+		
+		for i := 0; i < chars; i++ {
+			sb.WriteString(style.Render("█"))
+			currentCol++
+			if currentCol >= w {
+				sb.WriteString("\n")
+				currentCol = 0
+			}
+		}
 	}
-	// The output might exceed the box due to rounding and minimum 1 char. 
-	// We just truncate the final string to totalChars (ignoring ansi codes is hard, so we just let lipgloss clip it)
-	// Actually lipgloss handles overflow in paneStyle, but to avoid breaking layout we can do a simple chunking.
-	// We can use lipgloss width/height constraints.
 	return sb.String()
 }
 

@@ -2,6 +2,8 @@ package tui
 
 import (
 	"fmt"
+	"path/filepath"
+	"sort"
 	"strings"
 	"time"
 
@@ -164,30 +166,188 @@ func fmtDuration(d time.Duration) string {
 	return fmt.Sprintf("%02d:%02d:%02d", h, m, s)
 }
 
+type treemapBox struct {
+	path        string
+	lines       int
+	lastTouched time.Time
+	colorIndex  int
+	x, y, w, h  int
+}
+
+func partition(boxes []*treemapBox, x, y, w, h int) {
+	if len(boxes) == 0 {
+		return
+	}
+	if len(boxes) == 1 {
+		boxes[0].x = x
+		boxes[0].y = y
+		boxes[0].w = w
+		boxes[0].h = h
+		return
+	}
+
+	total := 0
+	for _, b := range boxes {
+		total += b.lines
+	}
+	if total == 0 {
+		for _, b := range boxes {
+			b.lines = 1
+		}
+		total = len(boxes)
+	}
+
+	firstWeight := boxes[0].lines
+	ratio := float64(firstWeight) / float64(total)
+
+	if float64(w) > 2.0*float64(h) {
+		splitW := int(float64(w) * ratio)
+		if splitW < 1 {
+			splitW = 1
+		}
+		if splitW >= w {
+			splitW = w - 1
+		}
+		partition(boxes[:1], x, y, splitW, h)
+		partition(boxes[1:], x+splitW, y, w-splitW, h)
+	} else {
+		splitH := int(float64(h) * ratio)
+		if splitH < 1 {
+			splitH = 1
+		}
+		if splitH >= h {
+			splitH = h - 1
+		}
+		partition(boxes[:1], x, y, w, splitH)
+		partition(boxes[1:], x, y+splitH, w, h-splitH)
+	}
+}
+
+type cell struct {
+	char  rune
+	style lipgloss.Style
+}
+
 func (m Model) renderTreemap(w, h int) string {
 	if m.TotalLines == 0 || len(m.Treemap) == 0 {
 		return dimStyle.Render("Loading treemap...")
 	}
-	totalChars := w * h
-	var sb strings.Builder
-	currentCol := 0
-	for i, c := range m.Treemap {
-		chars := int(float64(c.Lines) / float64(m.TotalLines) * float64(totalChars))
-		if chars < 1 {
-			chars = 1
+
+	boxes := make([]*treemapBox, len(m.Treemap))
+	for i, cell := range m.Treemap {
+		boxes[i] = &treemapBox{
+			path:        cell.Path,
+			lines:       cell.Lines,
+			lastTouched: cell.LastTouched,
+			colorIndex:  i,
 		}
-		color := fadeColor(c.LastTouched, i)
-		style := lipgloss.NewStyle().Foreground(color)
-		
-		for i := 0; i < chars; i++ {
-			sb.WriteString(style.Render("█"))
-			currentCol++
-			if currentCol >= w {
-				sb.WriteString("\n")
-				currentCol = 0
+	}
+
+	sort.Slice(boxes, func(i, j int) bool {
+		return boxes[i].lines > boxes[j].lines
+	})
+
+	partition(boxes, 0, 0, w, h)
+
+	grid := make([][]cell, h)
+	for i := range grid {
+		grid[i] = make([]cell, w)
+		for j := range grid[i] {
+			grid[i][j] = cell{char: ' '}
+		}
+	}
+
+	draw := func(cx, cy int, r rune, style lipgloss.Style) {
+		if cx >= 0 && cx < w && cy >= 0 && cy < h {
+			grid[cy][cx] = cell{char: r, style: style}
+		}
+	}
+
+	for _, box := range boxes {
+		if box.w <= 0 || box.h <= 0 {
+			continue
+		}
+
+		color := fadeColor(box.lastTouched, box.colorIndex)
+		borderStyle := lipgloss.NewStyle().Foreground(color)
+
+		for cy := box.y; cy < box.y+box.h; cy++ {
+			for cx := box.x; cx < box.x+box.w; cx++ {
+				isTop := cy == box.y
+				isBottom := cy == box.y+box.h-1
+				isLeft := cx == box.x
+				isRight := cx == box.x+box.w-1
+
+				if isTop && isLeft {
+					draw(cx, cy, '┌', borderStyle)
+				} else if isTop && isRight {
+					draw(cx, cy, '┐', borderStyle)
+				} else if isBottom && isLeft {
+					draw(cx, cy, '└', borderStyle)
+				} else if isBottom && isRight {
+					draw(cx, cy, '┘', borderStyle)
+				} else if isTop || isBottom {
+					draw(cx, cy, '─', borderStyle)
+				} else if isLeft || isRight {
+					draw(cx, cy, '│', borderStyle)
+				}
+			}
+		}
+
+		availableWidth := box.w - 2
+		if availableWidth > 0 && box.h >= 3 {
+			label := filepath.Base(box.path)
+			if len(label) > availableWidth {
+				if availableWidth > 3 {
+					label = label[:availableWidth-3] + "..."
+				} else {
+					label = label[:availableWidth]
+				}
+			}
+
+			centerY := box.y + box.h/2
+			if box.h >= 4 && box.h%2 == 0 {
+				centerY = box.y + box.h/2 - 1
+			}
+
+			var textStyle lipgloss.Style
+			if !box.lastTouched.IsZero() && time.Since(box.lastTouched).Seconds() < 2.0 {
+				textStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#ffffff")).Bold(true)
+			} else {
+				textStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#a0a0c0"))
+			}
+
+			startX := box.x + (box.w-len(label))/2
+			for i, r := range label {
+				draw(startX+i, centerY, r, textStyle)
+			}
+
+			if box.h >= 4 {
+				linesLabel := fmt.Sprintf("%d L", box.lines)
+				if len(linesLabel) <= availableWidth {
+					startLinesX := box.x + (box.w-len(linesLabel))/2
+					for i, r := range linesLabel {
+						draw(startLinesX+i, centerY+1, r, textStyle)
+					}
+				}
 			}
 		}
 	}
+
+	var sb strings.Builder
+	for i, row := range grid {
+		for _, cell := range row {
+			if cell.char == ' ' {
+				sb.WriteRune(' ')
+			} else {
+				sb.WriteString(cell.style.Render(string(cell.char)))
+			}
+		}
+		if i < len(grid)-1 {
+			sb.WriteRune('\n')
+		}
+	}
+
 	return sb.String()
 }
 

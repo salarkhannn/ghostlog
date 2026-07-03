@@ -43,6 +43,7 @@ func New(repoPath string, ch chan<- CommitMsg) (*Watcher, error) {
 		repoPath: repoPath,
 		ch:       ch,
 		done:     make(chan struct{}),
+		lastHash: headHash(repoPath),
 	}, nil
 }
 
@@ -62,6 +63,14 @@ func (w *Watcher) loop() {
 			if !ok {
 				return
 			}
+			
+			// Dynamically watch newly created directories (like .git/logs)
+			if ev.Has(fsnotify.Create) {
+				if stat, err := os.Stat(ev.Name); err == nil && stat.IsDir() {
+					w.fw.Add(ev.Name)
+				}
+			}
+
 			if isRelevant(ev) {
 				w.arm()
 			}
@@ -81,21 +90,33 @@ func (w *Watcher) arm() {
 		w.timer.Stop()
 	}
 	w.timer = time.AfterFunc(500*time.Millisecond, func() {
-		hash := headHash(w.repoPath)
-		if hash == "" {
-			return
-		}
 		w.mu.Lock()
-		dup := hash == w.lastHash
-		if !dup {
-			w.lastHash = hash
-		}
+		last := w.lastHash
 		w.mu.Unlock()
 
-		if !dup {
+		var hashes []string
+		if last == "" {
+			// Fresh repo, get only the first commit ever
+			out, _ := exec.Command("git", "-C", w.repoPath, "log", "--format=%H", "--reverse").Output()
+			hashes = strings.Fields(string(out))
+		} else {
+			out, _ := exec.Command("git", "-C", w.repoPath, "log", last+"..HEAD", "--format=%H", "--reverse").Output()
+			hashes = strings.Fields(string(out))
+		}
+
+		if len(hashes) == 0 {
+			return
+		}
+
+		w.mu.Lock()
+		w.lastHash = hashes[len(hashes)-1]
+		w.mu.Unlock()
+
+		for _, hash := range hashes {
 			select {
 			case w.ch <- CommitMsg{Hash: hash, RepoPath: w.repoPath}:
 			case <-w.done:
+				return
 			}
 		}
 	})

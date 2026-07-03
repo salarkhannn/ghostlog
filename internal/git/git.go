@@ -31,7 +31,7 @@ func DiffTree(repoPath, hash string) (*CommitInfo, error) {
 		return v.(*CommitInfo), nil
 	}
 
-	out, err := exec.Command("git", "-C", repoPath, "diff-tree", "--no-commit-id", "-p", "-r", hash).Output()
+	out, err := exec.Command("git", "-C", repoPath, "diff-tree", "--root", "--no-commit-id", "-p", "-r", hash).Output()
 	if err != nil {
 		return nil, fmt.Errorf("diff-tree %s: %w", short(hash), err)
 	}

@@ -324,6 +324,7 @@ func partition(boxes []*treemapBox, x, y, w, h int) {
 type cell struct {
 	char  rune
 	style lipgloss.Style
+	skip  bool
 }
 
 func (m Model) renderTreemap(w, h int) string {
@@ -450,18 +451,49 @@ func (m Model) renderTreemap(w, h int) string {
 
 		availableWidth := box.w - 2
 		if availableWidth > 0 && box.h >= 3 {
-			label := box.name
+			emoji := ""
+			emojiWidth := 0
 			if box.isDir {
-				label += "/"
+				emoji = "📁"
+				emojiWidth = 3
+			} else if strings.HasPrefix(box.name, "+") {
+				// No emoji
+			} else if strings.HasSuffix(box.name, ".go") {
+				emoji = "🐹"
+				emojiWidth = 3
+			} else {
+				emoji = "📄"
+				emojiWidth = 3
 			}
-			if len(label) > availableWidth {
-				if availableWidth > 3 {
-					label = label[:availableWidth-3] + "..."
+
+			nameRunes := []rune(box.name)
+			if box.isDir {
+				nameRunes = append(nameRunes, '/')
+			}
+
+			if emojiWidth+len(nameRunes) > availableWidth {
+				if availableWidth >= 6 {
+					allowedTextWidth := availableWidth - emojiWidth
+					if allowedTextWidth > 3 {
+						nameRunes = append(nameRunes[:allowedTextWidth-3], '.', '.', '.')
+					} else {
+						nameRunes = nameRunes[:allowedTextWidth]
+					}
 				} else {
-					label = label[:availableWidth]
+					emoji = ""
+					emojiWidth = 0
+					if len(nameRunes) > availableWidth {
+						if availableWidth > 3 {
+							nameRunes = append(nameRunes[:availableWidth-3], '.', '.', '.')
+						} else {
+							nameRunes = nameRunes[:availableWidth]
+						}
+					}
 				}
 			}
 
+			totalWidth := emojiWidth + len(nameRunes)
+			startX := box.x + (box.w-totalWidth)/2
 			centerY := box.y + box.h/2
 			if box.h >= 4 && box.h%2 == 0 {
 				centerY = box.y + box.h/2 - 1
@@ -476,9 +508,28 @@ func (m Model) renderTreemap(w, h int) string {
 				textStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#a0a0c0"))
 			}
 
-			startX := box.x + (box.w-len(label))/2
-			for idx, r := range label {
-				draw(startX+idx, centerY, r, textStyle)
+			currentX := startX
+			if emoji != "" {
+				emojiRune := []rune(emoji)[0]
+				if currentX >= 0 && currentX < w && centerY >= 0 && centerY < gridH {
+					grid[centerY][currentX] = cell{char: emojiRune, style: textStyle}
+				}
+				currentX++
+				if currentX >= 0 && currentX < w && centerY >= 0 && centerY < gridH {
+					grid[centerY][currentX] = cell{skip: true}
+				}
+				currentX++
+				if currentX >= 0 && currentX < w && centerY >= 0 && centerY < gridH {
+					grid[centerY][currentX] = cell{char: ' ', style: textStyle}
+				}
+				currentX++
+			}
+
+			for _, r := range nameRunes {
+				if currentX >= 0 && currentX < w && centerY >= 0 && centerY < gridH {
+					grid[centerY][currentX] = cell{char: r, style: textStyle}
+				}
+				currentX++
 			}
 
 			if box.h >= 4 {
@@ -499,6 +550,9 @@ func (m Model) renderTreemap(w, h int) string {
 
 	for _, row := range grid {
 		for _, cell := range row {
+			if cell.skip {
+				continue
+			}
 			if cell.char == ' ' {
 				sb.WriteRune(' ')
 			} else {

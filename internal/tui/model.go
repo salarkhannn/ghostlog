@@ -3,6 +3,7 @@ package tui
 import (
 	"time"
 
+	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/salarkhannn/ghostlog/internal/analyzer"
 	"github.com/salarkhannn/ghostlog/internal/git"
@@ -17,16 +18,17 @@ type Model struct {
 	az                 *analyzer.Analyzer
 	Bursts             []analyzer.Burst
 	SelectedBurstIndex int
-	ScrollOffset       int
 	AutoScroll         bool
 	CPSMetric          float64
 	sessionStart       time.Time
 	commitTimestamps   []time.Time
-	selectedDiff       string
-	width              int
-	height             int
 	totalAdded         int
 	totalRemoved       int
+
+	vp      viewport.Model
+	vpReady bool
+	width   int
+	height  int
 }
 
 func New(repoPath string, ch <-chan watcher.CommitMsg) Model {
@@ -40,16 +42,11 @@ func New(repoPath string, ch <-chan watcher.CommitMsg) Model {
 }
 
 func (m Model) Init() tea.Cmd {
-	return tea.Batch(
-		watcher.WaitForCommit(m.commitCh),
-		tickCmd(),
-	)
+	return tea.Batch(watcher.WaitForCommit(m.commitCh), tickCmd())
 }
 
 func tickCmd() tea.Cmd {
-	return tea.Tick(time.Second, func(t time.Time) tea.Msg {
-		return tickMsg(t)
-	})
+	return tea.Tick(time.Second, func(t time.Time) tea.Msg { return tickMsg(t) })
 }
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -57,6 +54,14 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
 		m.height = msg.Height
+		vpW, vpH := rightPaneDims(m.width, m.height)
+		if !m.vpReady {
+			m.vp = viewport.New(vpW, vpH)
+			m.vpReady = true
+		} else {
+			m.vp.Width = vpW
+			m.vp.Height = vpH
+		}
 		return m, nil
 
 	case tea.KeyMsg:
@@ -74,8 +79,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		bursts, changed := m.az.Add(info)
 		if changed {
 			m.Bursts = bursts
-			now := time.Now()
-			m.commitTimestamps = append(m.commitTimestamps, now)
+			m.commitTimestamps = append(m.commitTimestamps, time.Now())
 			for _, d := range info.Diffs {
 				m.totalAdded += d.LinesAdded
 				m.totalRemoved += d.LinesRemoved
@@ -83,11 +87,29 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if m.AutoScroll {
 				m.SelectedBurstIndex = len(m.Bursts) - 1
 			}
-			m.selectedDiff = loadDiff(m.repoPath, m.Bursts, m.SelectedBurstIndex)
+			m.refreshViewport()
 		}
 		return m, watcher.WaitForCommit(m.commitCh)
 	}
 	return m, nil
+}
+
+func (m *Model) refreshViewport() {
+	if !m.vpReady || len(m.Bursts) == 0 {
+		return
+	}
+	if m.SelectedBurstIndex < 0 || m.SelectedBurstIndex >= len(m.Bursts) {
+		return
+	}
+	diff, err := git.Show(m.repoPath, m.Bursts[m.SelectedBurstIndex].Hashes)
+	if err != nil {
+		m.vp.SetContent("error: " + err.Error())
+		return
+	}
+	m.vp.SetContent(diff)
+	if m.AutoScroll {
+		m.vp.GotoBottom()
+	}
 }
 
 func (m Model) calcCPM() float64 {
@@ -101,13 +123,8 @@ func (m Model) calcCPM() float64 {
 	return float64(n)
 }
 
-func loadDiff(repoPath string, bursts []analyzer.Burst, idx int) string {
-	if len(bursts) == 0 || idx < 0 || idx >= len(bursts) {
-		return ""
-	}
-	diff, err := git.Show(repoPath, bursts[idx].Hashes)
-	if err != nil {
-		return "error loading diff: " + err.Error()
-	}
-	return diff
+func rightPaneDims(totalW, totalH int) (w, h int) {
+	w = totalW*60/100 - 4
+	h = totalH - 4
+	return
 }

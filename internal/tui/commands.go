@@ -16,54 +16,48 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 		if m.SelectedBurstIndex < len(m.Bursts)-1 {
 			m.SelectedBurstIndex++
 			m.AutoScroll = false
-			m.ScrollOffset = 0
-			m.selectedDiff = loadDiff(m.repoPath, m.Bursts, m.SelectedBurstIndex)
+			m.vp.GotoTop()
+			m.refreshViewport()
 		}
 
 	case "k", "up":
 		if m.SelectedBurstIndex > 0 {
 			m.SelectedBurstIndex--
 			m.AutoScroll = false
-			m.ScrollOffset = 0
-			m.selectedDiff = loadDiff(m.repoPath, m.Bursts, m.SelectedBurstIndex)
-		}
-
-	case "pgdown", "ctrl+d":
-		m.ScrollOffset += 20
-
-	case "pgup", "ctrl+u":
-		m.ScrollOffset -= 20
-		if m.ScrollOffset < 0 {
-			m.ScrollOffset = 0
+			m.vp.GotoTop()
+			m.refreshViewport()
 		}
 
 	case "a":
 		m.AutoScroll = !m.AutoScroll
 		if m.AutoScroll && len(m.Bursts) > 0 {
 			m.SelectedBurstIndex = len(m.Bursts) - 1
-			m.ScrollOffset = 0
-			m.selectedDiff = loadDiff(m.repoPath, m.Bursts, m.SelectedBurstIndex)
+			m.refreshViewport()
 		}
 
 	case "c":
 		if m.SelectedBurstIndex >= 0 && m.SelectedBurstIndex < len(m.Bursts) {
-			hashes := m.Bursts[m.SelectedBurstIndex].Hashes
-			copyToClipboard(strings.Join(hashes, " "))
+			copyToClipboard(strings.Join(m.Bursts[m.SelectedBurstIndex].Hashes, " "))
 		}
+
+	default:
+		var cmd tea.Cmd
+		m.vp, cmd = m.vp.Update(msg)
+		return m, cmd
 	}
 
 	return m, nil
 }
 
 func copyToClipboard(s string) {
-	for _, cmd := range [][]string{
+	for _, args := range [][]string{
 		{"xclip", "-selection", "clipboard"},
 		{"xsel", "--clipboard", "--input"},
 		{"wl-copy"},
 	} {
-		c := exec.Command(cmd[0], cmd[1:]...) //nolint
+		c := exec.Command(args[0], args[1:]...)
 		c.Stdin = strings.NewReader(s)
-		if err := c.Run(); err == nil {
+		if c.Run() == nil {
 			return
 		}
 	}

@@ -137,8 +137,8 @@ func formatBurst(n int, b analyzer.Burst, w int) string {
 	}
 
 	status := okStyle.Render("[OK]")
-	if b.HasConflict {
-		status = conflictStyle.Render("[!!]")
+	if b.HasConflict || (b.ComplexityAfter-b.ComplexityBefore) > 10 || len(b.UntestedFunctions) > 0 {
+		status = conflictStyle.Render("[WARN]")
 	}
 
 	added := addStyle.Render(fmt.Sprintf("+%d", b.LinesAdded))

@@ -32,7 +32,7 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 			}
 			return m, nil
 
-		case "enter":
+		case "enter", "\n", "\r":
 			if len(items) > 0 && m.SelectedTreemapIndex >= 0 && m.SelectedTreemapIndex < len(items) {
 				sel := items[m.SelectedTreemapIndex]
 				if sel.isDir {

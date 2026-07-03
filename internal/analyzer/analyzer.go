@@ -4,6 +4,7 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -24,6 +25,7 @@ type Burst struct {
 	HasConflict    bool
 	ComplexityBefore int
 	ComplexityAfter  int
+	UntestedFunctions []string
 }
 
 type Analyzer struct {
@@ -48,6 +50,7 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 
 	var added, removed, bytesAdded int
 	var compBefore, compAfter int
+	var untested []string
 	hasConflict := false
 	for _, d := range info.Diffs {
 		added += d.LinesAdded
@@ -61,6 +64,25 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 			afterCode, _ := git.ShowFile(a.repoPath, info.Hash, d.Path)
 			compBefore += calcComplexity(beforeCode)
 			compAfter += calcComplexity(afterCode)
+
+			if !strings.HasSuffix(d.Path, "_test.go") {
+				funcs := getChangedFuncs(afterCode, d.ChangedLines)
+				if len(funcs) > 0 {
+					testFiles, _ := git.ListFiles(a.repoPath, info.Hash, filepath.Dir(d.Path))
+					var testCodes [][]byte
+					for _, tf := range testFiles {
+						if strings.HasSuffix(tf, "_test.go") {
+							tc, _ := git.ShowFile(a.repoPath, info.Hash, tf)
+							testCodes = append(testCodes, tc)
+						}
+					}
+					for _, fn := range funcs {
+						if !isTested(fn, testCodes) {
+							untested = append(untested, fn)
+						}
+					}
+				}
+			}
 		}
 	}
 	files := len(info.Diffs)
@@ -77,6 +99,9 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 			last.BytesAdded += bytesAdded
 			last.ComplexityBefore += compBefore
 			last.ComplexityAfter += compAfter
+			if len(untested) > 0 {
+				last.UntestedFunctions = append(last.UntestedFunctions, untested...)
+			}
 			if hasConflict {
 				last.HasConflict = true
 			}
@@ -97,6 +122,7 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 		HasConflict:      hasConflict,
 		ComplexityBefore: compBefore,
 		ComplexityAfter:  compAfter,
+		UntestedFunctions: untested,
 	}
 
 	if len(a.bursts) >= 100 {
@@ -131,4 +157,52 @@ func calcComplexity(src []byte) int {
 		return true
 	})
 	return count
+}
+
+func getChangedFuncs(src []byte, changedLines [][2]int) []string {
+	if len(src) == 0 || len(changedLines) == 0 {
+		return nil
+	}
+	fset := token.NewFileSet()
+	f, err := parser.ParseFile(fset, "", src, 0)
+	if err != nil {
+		return nil
+	}
+
+	var funcs []string
+	for _, d := range f.Decls {
+		if fn, ok := d.(*ast.FuncDecl); ok {
+			start := fset.Position(fn.Pos()).Line
+			end := fset.Position(fn.End()).Line
+			for _, r := range changedLines {
+				if r[0] <= end && r[1] >= start {
+					funcs = append(funcs, fn.Name.Name)
+					break
+				}
+			}
+		}
+	}
+	return funcs
+}
+
+func isTested(funcName string, testCodes [][]byte) bool {
+	for _, src := range testCodes {
+		fset := token.NewFileSet()
+		f, err := parser.ParseFile(fset, "", src, 0)
+		if err != nil {
+			continue
+		}
+		found := false
+		ast.Inspect(f, func(n ast.Node) bool {
+			if ident, ok := n.(*ast.Ident); ok && ident.Name == funcName {
+				found = true
+				return false
+			}
+			return !found
+		})
+		if found {
+			return true
+		}
+	}
+	return false
 }

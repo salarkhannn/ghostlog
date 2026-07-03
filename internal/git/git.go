@@ -15,6 +15,7 @@ type FileDiff struct {
 	LinesRemoved int
 	Bytes       int
 	HasConflict bool
+	ChangedLines [][2]int
 }
 
 type CommitInfo struct {
@@ -57,6 +58,22 @@ func ShowFile(repoPath, hash, path string) ([]byte, error) {
 	return out, nil
 }
 
+func ListFiles(repoPath, hash, dir string) ([]string, error) {
+	if dir == "." {
+		dir = ""
+	}
+	out, err := exec.Command("git", "-C", repoPath, "ls-tree", "--name-only", "-r", hash, dir).Output()
+	if err != nil {
+		return nil, err
+	}
+	var files []string
+	scanner := bufio.NewScanner(bytes.NewReader(out))
+	for scanner.Scan() {
+		files = append(files, scanner.Text())
+	}
+	return files, nil
+}
+
 
 func short(h string) string {
 	if len(h) > 8 {
@@ -68,6 +85,7 @@ func short(h string) string {
 func parseDiff(data []byte) []FileDiff {
 	var diffs []FileDiff
 	var cur *FileDiff
+	var curLine int
 
 	scanner := bufio.NewScanner(bytes.NewReader(data))
 	for scanner.Scan() {
@@ -78,20 +96,56 @@ func parseDiff(data []byte) []FileDiff {
 				diffs = append(diffs, *cur)
 			}
 			cur = &FileDiff{}
+			curLine = 0
 		case strings.HasPrefix(line, "+++ b/") && cur != nil:
 			cur.Path = strings.TrimPrefix(line, "+++ b/")
+		case strings.HasPrefix(line, "@@ ") && cur != nil:
+			// parse @@ -start,len +start,len @@
+			parts := strings.Split(line, " ")
+			if len(parts) >= 3 && strings.HasPrefix(parts[2], "+") {
+				plus := strings.TrimPrefix(parts[2], "+")
+				sp := strings.Split(plus, ",")
+				fmt.Sscanf(sp[0], "%d", &curLine)
+				// track block if needed, but we can just track added lines as they appear
+			}
 		case cur != nil && strings.HasPrefix(line, "+") && !strings.HasPrefix(line, "+++"):
 			cur.LinesAdded++
 			cur.Bytes += len(line) - 1
+			if curLine > 0 {
+				cur.ChangedLines = append(cur.ChangedLines, [2]int{curLine, curLine})
+				curLine++
+			}
 			if strings.HasPrefix(line, "+<<<<<<< ") {
 				cur.HasConflict = true
 			}
 		case cur != nil && strings.HasPrefix(line, "-") && !strings.HasPrefix(line, "---"):
 			cur.LinesRemoved++
+		case cur != nil && !strings.HasPrefix(line, "-") && !strings.HasPrefix(line, "+") && !strings.HasPrefix(line, "\\"):
+			if curLine > 0 {
+				curLine++
+			}
 		}
 	}
 	if cur != nil {
 		diffs = append(diffs, *cur)
+	}
+	// collapse adjacent lines
+	for i := range diffs {
+		if len(diffs[i].ChangedLines) > 0 {
+			var merged [][2]int
+			c := diffs[i].ChangedLines[0]
+			for j := 1; j < len(diffs[i].ChangedLines); j++ {
+				next := diffs[i].ChangedLines[j]
+				if next[0] <= c[1]+1 {
+					c[1] = next[1]
+				} else {
+					merged = append(merged, c)
+					c = next
+				}
+			}
+			merged = append(merged, c)
+			diffs[i].ChangedLines = merged
+		}
 	}
 	return diffs
 }

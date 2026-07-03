@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/salarkhannn/ghostlog/internal/tui"
@@ -12,6 +13,14 @@ import (
 )
 
 func main() {
+	if len(os.Args) > 1 && !strings.HasPrefix(os.Args[1], "-") {
+		switch os.Args[1] {
+		case "export":
+			runExport(os.Args[2:])
+			return
+		}
+	}
+
 	repoPath := flag.String("repo", ".", "path to git repository to watch")
 	flag.Parse()
 

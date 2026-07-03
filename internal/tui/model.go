@@ -187,3 +187,21 @@ func rightPaneDims(totalW, totalH int) (w, h int) {
 	h = totalH - 4
 	return
 }
+
+func (m Model) Verdict() string {
+	spikes := 0
+	untested := 0
+	for _, b := range m.Bursts {
+		if (b.ComplexityAfter - b.ComplexityBefore) > 10 {
+			spikes++
+		}
+		if len(b.UntestedFunctions) > 0 {
+			untested++
+		}
+	}
+	dur := m.sessionStart
+	elapsed := time.Since(dur).Round(time.Second)
+	min := int(elapsed.Minutes()) % 60
+	s := int(elapsed.Seconds()) % 60
+	return fmt.Sprintf("session: %d bursts, %d complexity spikes, %d untested, duration %02d:%02d", len(m.Bursts), spikes, untested, min, s)
+}

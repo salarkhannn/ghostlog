@@ -51,8 +51,13 @@ func main() {
 		tui.New(abs, ch),
 		tea.WithAltScreen(),
 	)
-	if _, err := p.Run(); err != nil {
+	m, err := p.Run()
+	if err != nil {
 		fmt.Fprintf(os.Stderr, "ghostlog: %v\n", err)
 		os.Exit(1)
+	}
+
+	if tuiModel, ok := m.(tui.Model); ok {
+		fmt.Fprintln(os.Stderr, tuiModel.Verdict())
 	}
 }

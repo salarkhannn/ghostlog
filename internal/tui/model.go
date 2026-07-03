@@ -42,16 +42,19 @@ type Model struct {
 	vpReady bool
 	width   int
 	height  int
+
+	lastTouchedMap map[string]time.Time
 }
 
 func New(repoPath string, ch <-chan watcher.CommitMsg) Model {
 	return Model{
-		repoPath:     repoPath,
-		commitCh:     ch,
-		az:           analyzer.New(repoPath),
-		AutoScroll:   true,
-		ViewMode:     "burst",
-		sessionStart: time.Now(),
+		repoPath:       repoPath,
+		commitCh:       ch,
+		az:             analyzer.New(repoPath),
+		AutoScroll:     true,
+		ViewMode:       "burst",
+		sessionStart:   time.Now(),
+		lastTouchedMap: make(map[string]time.Time),
 	}
 }
 
@@ -100,7 +103,13 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case treemapMsg:
 		m.Treemap = msg
+		m.TotalLines = 0
 		for _, c := range m.Treemap {
+			if m.lastTouchedMap != nil {
+				if t, ok := m.lastTouchedMap[c.Path]; ok {
+					c.LastTouched = t
+				}
+			}
 			m.TotalLines += c.Lines
 		}
 		return m, nil
@@ -134,9 +143,13 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if changed {
 			m.Bursts = bursts
 			m.commitTimestamps = append(m.commitTimestamps, time.Now())
+			if m.lastTouchedMap == nil {
+				m.lastTouchedMap = make(map[string]time.Time)
+			}
 			for _, d := range info.Diffs {
 				m.totalAdded += d.LinesAdded
 				m.totalRemoved += d.LinesRemoved
+				m.lastTouchedMap[d.Path] = time.Now()
 				for _, cell := range m.Treemap {
 					if cell.Path == d.Path {
 						cell.LastTouched = time.Now()
@@ -147,6 +160,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.SelectedBurstIndex = len(m.Bursts) - 1
 			}
 			m.refreshViewport()
+			return m, tea.Batch(
+				watcher.WaitForCommit(m.commitCh),
+				m.loadTreemap(),
+			)
 		}
 		return m, watcher.WaitForCommit(m.commitCh)
 	}

@@ -231,6 +231,27 @@ func (m Model) getGroupedItems() []*treemapItem {
 		return items[i].lines > items[j].lines
 	})
 
+	// Cap at 11 items to prevent terminal layout density breakdown
+	if len(items) > 11 {
+		topItems := items[:10]
+		otherLines := 0
+		var otherTouched time.Time
+		for _, it := range items[10:] {
+			otherLines += it.lines
+			if it.lastTouched.After(otherTouched) {
+				otherTouched = it.lastTouched
+			}
+		}
+		others := &treemapItem{
+			path:        "",
+			name:        fmt.Sprintf("+%d others", len(items)-10),
+			isDir:       false,
+			lines:       otherLines,
+			lastTouched: otherTouched,
+		}
+		items = append(topItems, others)
+	}
+
 	return items
 }
 
@@ -376,6 +397,15 @@ func (m Model) renderTreemap(w, h int) string {
 			borderStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#00f0ff")).Bold(true)
 		} else {
 			borderStyle = lipgloss.NewStyle().Foreground(color)
+		}
+
+		if box.w < 2 || box.h < 2 {
+			char := '░'
+			if isSel {
+				char = '█'
+			}
+			draw(box.x, box.y, char, borderStyle)
+			continue
 		}
 
 		var topL, topR, botL, botR, horiz, vert rune

@@ -132,6 +132,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.KeyMsg:
 		return handleKey(m, msg)
 
+	case tea.MouseMsg:
+		return handleMouse(m, msg)
+
 	case tickMsg:
 		m.CPSMetric = m.calcCPM()
 		return m, tickCmd()

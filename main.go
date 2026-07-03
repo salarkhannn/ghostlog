@@ -50,6 +50,7 @@ func main() {
 	p := tea.NewProgram(
 		tui.New(abs, ch),
 		tea.WithAltScreen(),
+		tea.WithMouseCellMotion(),
 	)
 	m, err := p.Run()
 	if err != nil {

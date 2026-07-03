@@ -404,7 +404,11 @@ func (m Model) renderTreemap(w, h int) string {
 			if isSel {
 				char = '█'
 			}
-			draw(box.x, box.y, char, borderStyle)
+			for cy := box.y; cy < box.y+box.h; cy++ {
+				for cx := box.x; cx < box.x+box.w; cx++ {
+					draw(cx, cy, char, borderStyle)
+				}
+			}
 			continue
 		}
 

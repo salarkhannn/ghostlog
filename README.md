@@ -49,6 +49,20 @@ ghostlog -repo ~/my-project
 cd ~/my-project && aider
 ```
 
+### Subcommands
+
+**Export Session Manifest**
+Export a JSONL manifest of the burst log with metadata and complexity deltas:
+```sh
+ghostlog export -session /path/to/project -out manifest.jsonl
+```
+
+**CI Gate Mode**
+Run ghostlog in a headless mode in CI pipelines to block complex or untested AI code:
+```sh
+ghostlog check -session /path/to/project -fail-on complexity,coverage -max-complexity-delta 10 -min-coverage-touch 0.8
+```
+
 ## Keybindings
 
 | Key | Action |
@@ -59,6 +73,7 @@ cd ~/my-project && aider
 | `Ctrl+U` / `PgUp` | Scroll diff up |
 | `a` | Toggle auto-scroll (follows newest burst) |
 | `c` | Copy commit hashes of selected burst to clipboard |
+| `v` | Toggle file-flash treemap view |
 | `q` / `Ctrl+C` | Quit |
 
 ## Concepts

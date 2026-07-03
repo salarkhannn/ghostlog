@@ -49,6 +49,15 @@ func Show(repoPath string, hashes []string) (string, error) {
 	return string(out), nil
 }
 
+func ShowFile(repoPath, hash, path string) ([]byte, error) {
+	out, err := exec.Command("git", "-C", repoPath, "show", fmt.Sprintf("%s:%s", hash, path)).Output()
+	if err != nil {
+		return nil, nil // Assume file doesn't exist at this hash
+	}
+	return out, nil
+}
+
+
 func short(h string) string {
 	if len(h) > 8 {
 		return h[:8]

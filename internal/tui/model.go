@@ -35,7 +35,7 @@ func New(repoPath string, ch <-chan watcher.CommitMsg) Model {
 	return Model{
 		repoPath:     repoPath,
 		commitCh:     ch,
-		az:           analyzer.New(),
+		az:           analyzer.New(repoPath),
 		AutoScroll:   true,
 		sessionStart: time.Now(),
 	}

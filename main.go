@@ -18,6 +18,9 @@ func main() {
 		case "export":
 			runExport(os.Args[2:])
 			return
+		case "check":
+			runCheck(os.Args[2:])
+			return
 		}
 	}
 

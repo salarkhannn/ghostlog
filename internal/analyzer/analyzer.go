@@ -26,6 +26,7 @@ type Burst struct {
 	ComplexityBefore int
 	ComplexityAfter  int
 	UntestedFunctions []string
+	TotalChangedFunctions int
 }
 
 type Analyzer struct {
@@ -49,7 +50,7 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 	a.seenHashes[info.Hash] = struct{}{}
 
 	var added, removed, bytesAdded int
-	var compBefore, compAfter int
+	var compBefore, compAfter, totalChangedFuncs int
 	var untested []string
 	hasConflict := false
 	for _, d := range info.Diffs {
@@ -68,6 +69,7 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 			if !strings.HasSuffix(d.Path, "_test.go") {
 				funcs := getChangedFuncs(afterCode, d.ChangedLines)
 				if len(funcs) > 0 {
+					totalChangedFuncs += len(funcs)
 					testFiles, _ := git.ListFiles(a.repoPath, info.Hash, filepath.Dir(d.Path))
 					var testCodes [][]byte
 					for _, tf := range testFiles {
@@ -99,6 +101,7 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 			last.BytesAdded += bytesAdded
 			last.ComplexityBefore += compBefore
 			last.ComplexityAfter += compAfter
+			last.TotalChangedFunctions += totalChangedFuncs
 			if len(untested) > 0 {
 				last.UntestedFunctions = append(last.UntestedFunctions, untested...)
 			}
@@ -123,6 +126,7 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 		ComplexityBefore: compBefore,
 		ComplexityAfter:  compAfter,
 		UntestedFunctions: untested,
+		TotalChangedFunctions: totalChangedFuncs,
 	}
 
 	if len(a.bursts) >= 100 {

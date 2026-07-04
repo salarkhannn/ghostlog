@@ -1,0 +1,896 @@
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go
+Name: node_modules    | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: node_modules | emojiWidth: 3 | len(nameRunes): 12 | stableW: 29 | isTruncated: false | finalString: node_modules/
+Name: x               | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 29, stableH: 36 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: x | emojiWidth: 3 | len(nameRunes): 1 | stableW: 29 | isTruncated: false | finalString: x/
+Name: .gitignore      | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: true
+TRUNCATE_LOG (Tier 1) | Name: .gitignore | emojiWidth: 3 | len(nameRunes): 10 | stableW: 31 | isTruncated: false | finalString: .gitignore
+Name: main.go         | W: 32, H: 39 | rW: 31, rH: 38 | stableW: 31, stableH: 38 | Tier: 1 | isSel: false
+TRUNCATE_LOG (Tier 1) | Name: main.go | emojiWidth: 3 | len(nameRunes): 7 | stableW: 31 | isTruncated: false | finalString: main.go

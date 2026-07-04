@@ -10,18 +10,19 @@ import (
 func runCheck(args []string) {
 	fs := flag.NewFlagSet("check", flag.ExitOnError)
 	session := fs.String("session", "", "path to git repository")
-	failOn := fs.String("fail-on", "", "comma-separated list of metrics (complexity,coverage)")
+	failOn := fs.String("fail-on", "", "comma-separated list of metrics (complexity,coverage,secrets)")
 	maxComplexityDelta := fs.Int("max-complexity-delta", 10, "maximum allowed complexity delta")
 	minCoverageTouch := fs.Float64("min-coverage-touch", 0.0, "minimum coverage touch ratio (0.0-1.0)")
 	fs.Parse(args)
 
 	if *session == "" || *failOn == "" {
-		fmt.Fprintln(os.Stderr, "Usage: ghostlog check -session <dir> -fail-on complexity,coverage")
+		fmt.Fprintln(os.Stderr, "Usage: ghostlog check -session <dir> -fail-on complexity,coverage,secrets")
 		os.Exit(1)
 	}
 
 	checkComplexity := strings.Contains(*failOn, "complexity")
 	checkCoverage := strings.Contains(*failOn, "coverage")
+	checkSecrets := strings.Contains(*failOn, "secrets")
 
 	bursts := extractBursts(*session)
 	failed := false
@@ -31,6 +32,14 @@ func runCheck(args []string) {
 
 		if checkComplexity && delta > *maxComplexityDelta {
 			fmt.Fprintf(os.Stderr, "burst %d: complexity delta %d exceeds %d\n", b.ID, delta, *maxComplexityDelta)
+			failed = true
+		}
+
+		if checkSecrets && len(b.SecretLeaks) > 0 {
+			fmt.Fprintf(os.Stderr, "burst %d: detected %d secret leaks:\n", b.ID, len(b.SecretLeaks))
+			for _, leak := range b.SecretLeaks {
+				fmt.Fprintf(os.Stderr, "  - %s\n", leak)
+			}
 			failed = true
 		}
 

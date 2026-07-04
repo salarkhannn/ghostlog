@@ -1,6 +1,7 @@
 package analyzer
 
 import (
+	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -27,6 +28,7 @@ type Burst struct {
 	ComplexityAfter  int
 	UntestedFunctions []string
 	TotalChangedFunctions int
+	SecretLeaks    []string
 }
 
 type Analyzer struct {
@@ -52,6 +54,7 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 	var added, removed, bytesAdded int
 	var compBefore, compAfter, totalChangedFuncs int
 	var untested []string
+	var secretLeaks []string
 	hasConflict := false
 	for _, d := range info.Diffs {
 		added += d.LinesAdded
@@ -86,6 +89,9 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 				}
 			}
 		}
+		for _, leak := range d.SecretLeaks {
+			secretLeaks = append(secretLeaks, fmt.Sprintf("%s:%s", d.Path, leak))
+		}
 	}
 	files := len(info.Diffs)
 	now := time.Now()
@@ -104,6 +110,9 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 			last.TotalChangedFunctions += totalChangedFuncs
 			if len(untested) > 0 {
 				last.UntestedFunctions = append(last.UntestedFunctions, untested...)
+			}
+			if len(secretLeaks) > 0 {
+				last.SecretLeaks = append(last.SecretLeaks, secretLeaks...)
 			}
 			if hasConflict {
 				last.HasConflict = true
@@ -127,6 +136,7 @@ func (a *Analyzer) Add(info *git.CommitInfo) ([]Burst, bool) {
 		ComplexityAfter:  compAfter,
 		UntestedFunctions: untested,
 		TotalChangedFunctions: totalChangedFuncs,
+		SecretLeaks:      secretLeaks,
 	}
 
 	if len(a.bursts) >= 100 {

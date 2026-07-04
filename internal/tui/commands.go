@@ -10,7 +10,8 @@ import (
 )
 
 func findSpatialNeighbor(m Model, currentIdx int, dir string) int {
-	items := m.getGroupedItems()
+	w, h := m.TreemapDims()
+	items, boxes := m.layoutTreemap(w, h)
 	if len(items) == 0 {
 		return currentIdx
 	}
@@ -18,35 +19,9 @@ func findSpatialNeighbor(m Model, currentIdx int, dir string) int {
 		return 0
 	}
 
-	leftW := m.width * 40 / 100
-	contentH := m.height - 2
-	h := contentH - 4
-	gridH := h - 2
-	if gridH < 3 {
-		gridH = 3
-	}
-
-	boxes := make([]*treemapBox, len(items))
-	for i, item := range items {
-		weight := math.Log2(float64(item.lines) + 1.0)
-		if weight < 1.0 {
-			weight = 1.0
-		}
-		boxes[i] = &treemapBox{
-			path:        item.path,
-			name:        item.name,
-			isDir:       item.isDir,
-			lines:       item.lines,
-			lastTouched: item.lastTouched,
-			colorIndex:  i,
-			weight:      weight,
-		}
-	}
-	partition(boxes, 0, 0, leftW-4, gridH)
-
 	curr := boxes[currentIdx]
-	cx := float64(curr.x) + float64(curr.w)/2.0
-	cy := float64(curr.y) + float64(curr.h)/2.0
+	cx := float64(curr.X) + float64(curr.W)/2.0
+	cy := float64(curr.Y) + float64(curr.H)/2.0
 
 	for _, threshold := range []float64{1.5, 0.1} {
 		bestIdx := -1
@@ -56,8 +31,8 @@ func findSpatialNeighbor(m Model, currentIdx int, dir string) int {
 			if i == currentIdx {
 				continue
 			}
-			bx := float64(b.x) + float64(b.w)/2.0
-			by := float64(b.y) + float64(b.h)/2.0
+			bx := float64(b.X) + float64(b.W)/2.0
+			by := float64(b.Y) + float64(b.H)/2.0
 
 			dx := bx - cx
 			dy := by - cy
@@ -107,21 +82,17 @@ func handleMouse(m Model, msg tea.MouseMsg) (Model, tea.Cmd) {
 		return m, nil
 	}
 
-	if msg.Button != tea.MouseButtonLeft || msg.Action != tea.MouseActionPress {
+	isClick := msg.Button == tea.MouseButtonLeft && msg.Action == tea.MouseActionPress
+	isHover := msg.Action == tea.MouseActionMotion || msg.Button == tea.MouseButtonNone
+	if !isClick && !isHover {
 		return m, nil
 	}
 
-	leftW := m.width * 40 / 100
-	contentH := m.height - 2
-	h := contentH - 4
-	gridH := h - 2
-	if gridH < 3 {
-		gridH = 3
-	}
+	w, h := m.TreemapDims()
 
-	// Click on Breadcrumb to go up/zoom out
-	if msg.Y == 2 && msg.X >= 0 && msg.X < leftW {
-		if m.CurrentDir != "" {
+	// Click on Breadcrumb to go up/zoom out (Y=1 with no top border)
+	if msg.Y == 1 && msg.X >= 0 && msg.X < w {
+		if isClick && m.CurrentDir != "" {
 			parent := filepath.Dir(m.CurrentDir)
 			if parent == "." || parent == "/" || parent == m.CurrentDir {
 				parent = ""
@@ -129,7 +100,7 @@ func handleMouse(m Model, msg tea.MouseMsg) (Model, tea.Cmd) {
 			oldDir := m.CurrentDir
 			m.CurrentDir = parent
 
-			parentItems := m.getGroupedItems()
+			parentItems, _ := m.getLayout(w, h)
 			m.SelectedTreemapIndex = 0
 			for idx, pi := range parentItems {
 				if pi.path == oldDir {
@@ -141,37 +112,23 @@ func handleMouse(m Model, msg tea.MouseMsg) (Model, tea.Cmd) {
 		return m, nil
 	}
 
-	// Click inside grid
+	// Interaction inside grid (starts at Y=2 with no top border, X=1 with left padding=1)
 	gridX := msg.X - 1
-	gridY := msg.Y - 3
-	if gridX >= 0 && gridX < (leftW-4) && gridY >= 0 && gridY < gridH {
-		items := m.getGroupedItems()
-		boxes := make([]*treemapBox, len(items))
-		for i, item := range items {
-			weight := math.Log2(float64(item.lines) + 1.0)
-			if weight < 1.0 {
-				weight = 1.0
-			}
-			boxes[i] = &treemapBox{
-				path:        item.path,
-				name:        item.name,
-				isDir:       item.isDir,
-				lines:       item.lines,
-				lastTouched: item.lastTouched,
-				colorIndex:  i,
-				weight:      weight,
-			}
-		}
-		partition(boxes, 0, 0, leftW-4, gridH)
-
+	gridY := msg.Y - 2
+	if gridX >= 0 && gridX < w && gridY >= 0 && gridY < h {
+		_, boxes := m.getLayout(w, h)
 		for i, box := range boxes {
-			if gridX >= box.x && gridX < box.x+box.w && gridY >= box.y && gridY < box.y+box.h {
-				if m.SelectedTreemapIndex == i {
-					if box.isDir {
-						m.CurrentDir = box.path
-						m.SelectedTreemapIndex = 0
+			if gridX >= box.X && gridX < box.X+box.W && gridY >= box.Y && gridY < box.Y+box.H {
+				if isClick {
+					if m.SelectedTreemapIndex == i {
+						if box.IsDir {
+							m.CurrentDir = box.Path
+							m.SelectedTreemapIndex = 0
+						}
+					} else {
+						m.SelectedTreemapIndex = i
 					}
-				} else {
+				} else if isHover {
 					m.SelectedTreemapIndex = i
 				}
 				break
@@ -184,7 +141,8 @@ func handleMouse(m Model, msg tea.MouseMsg) (Model, tea.Cmd) {
 
 func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 	if m.ViewMode == "treemap" {
-		items := m.getGroupedItems()
+		w, h := m.TreemapDims()
+		items, _ := m.getLayout(w, h)
 
 		switch msg.Type {
 		case tea.KeyCtrlC:
@@ -215,7 +173,8 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 				oldDir := m.CurrentDir
 				m.CurrentDir = parent
 
-				parentItems := m.getGroupedItems()
+				w, h := m.TreemapDims()
+				parentItems, _ := m.layoutTreemap(w, h)
 				m.SelectedTreemapIndex = 0
 				for idx, pi := range parentItems {
 					if pi.path == oldDir {
@@ -274,7 +233,8 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 				oldDir := m.CurrentDir
 				m.CurrentDir = parent
 
-				parentItems := m.getGroupedItems()
+				w, h := m.TreemapDims()
+				parentItems, _ := m.layoutTreemap(w, h)
 				m.SelectedTreemapIndex = 0
 				for idx, pi := range parentItems {
 					if pi.path == oldDir {
@@ -308,7 +268,8 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 				oldDir := m.CurrentDir
 				m.CurrentDir = parent
 
-				parentItems := m.getGroupedItems()
+				w, h := m.TreemapDims()
+				parentItems, _ := m.layoutTreemap(w, h)
 				m.SelectedTreemapIndex = 0
 				for idx, pi := range parentItems {
 					if pi.path == oldDir {

@@ -7,6 +7,8 @@ import (
 	"os/exec"
 	"strings"
 	"sync"
+
+	"github.com/salarkhannn/ghostlog/internal/secrets"
 )
 
 type FileDiff struct {
@@ -16,6 +18,7 @@ type FileDiff struct {
 	Bytes       int
 	HasConflict bool
 	ChangedLines [][2]int
+	SecretLeaks []string
 }
 
 type CommitInfo struct {
@@ -113,6 +116,10 @@ func parseDiff(data []byte) []FileDiff {
 			cur.Bytes += len(line) - 1
 			if curLine > 0 {
 				cur.ChangedLines = append(cur.ChangedLines, [2]int{curLine, curLine})
+				content := strings.TrimPrefix(line, "+")
+				if ruleName, ok := secrets.ScanLine(content); ok {
+					cur.SecretLeaks = append(cur.SecretLeaks, fmt.Sprintf("line %d: Potential %s", curLine, ruleName))
+				}
 				curLine++
 			}
 			if strings.HasPrefix(line, "+<<<<<<< ") {

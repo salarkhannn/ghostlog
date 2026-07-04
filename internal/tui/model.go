@@ -3,12 +3,17 @@ package tui
 import (
 	"bytes"
 	"fmt"
+	"math"
+	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
+	"strings"
 	"time"
 
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 	"github.com/salarkhannn/ghostlog/internal/analyzer"
 	"github.com/salarkhannn/ghostlog/internal/git"
 	"github.com/salarkhannn/ghostlog/internal/watcher"
@@ -20,6 +25,22 @@ type TreemapCell struct {
 	Path        string
 	Lines       int
 	LastTouched time.Time
+}
+
+type IconMode string
+
+const (
+	IconModeEmoji    IconMode = "emoji"
+	IconModeNerdFont IconMode = "nerd"
+	IconModeAscii    IconMode = "none"
+)
+
+type LayoutCache struct {
+	w, h        int
+	dir         string
+	commitCnt   int
+	boxes       []PositionedBox
+	parentItems []*treemapItem
 }
 
 type Model struct {
@@ -46,9 +67,14 @@ type Model struct {
 	lastTouchedMap       map[string]time.Time
 	CurrentDir           string
 	SelectedTreemapIndex int
+	layoutCache          *LayoutCache
+	IconMode             IconMode
 }
 
-func New(repoPath string, ch <-chan watcher.CommitMsg) Model {
+func New(repoPath string, ch <-chan watcher.CommitMsg, iconMode IconMode) Model {
+	if iconMode == "" {
+		iconMode = IconModeNerdFont
+	}
 	return Model{
 		repoPath:       repoPath,
 		commitCh:       ch,
@@ -56,7 +82,9 @@ func New(repoPath string, ch <-chan watcher.CommitMsg) Model {
 		AutoScroll:     true,
 		ViewMode:       "burst",
 		sessionStart:   time.Now(),
+		layoutCache:    &LayoutCache{},
 		lastTouchedMap: make(map[string]time.Time),
+		IconMode:       iconMode,
 	}
 }
 
@@ -121,12 +149,15 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.height = msg.Height
 		vpW, vpH := rightPaneDims(m.width, m.height)
 		if !m.vpReady {
+			os.Stdout.WriteString("\x1b[?7l") // Disable DECAWM safely after Alt Screen is entered
 			m.vp = viewport.New(vpW, vpH)
+			m.vp.Style = lipgloss.NewStyle().Background(BgColor)
 			m.vpReady = true
 		} else {
 			m.vp.Width = vpW
 			m.vp.Height = vpH
 		}
+		m.refreshViewport()
 		return m, nil
 
 	case tea.KeyMsg:
@@ -176,10 +207,15 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m *Model) refreshViewport() {
-	if !m.vpReady || len(m.Bursts) == 0 {
+	if !m.vpReady {
+		return
+	}
+	if len(m.Bursts) == 0 {
+		m.vp.SetContent(dimStyle.Render("\n  Waiting for first commit..."))
 		return
 	}
 	if m.SelectedBurstIndex < 0 || m.SelectedBurstIndex >= len(m.Bursts) {
+		m.vp.SetContent(dimStyle.Render("\n  No burst selected."))
 		return
 	}
 	diff, err := git.Show(m.repoPath, m.Bursts[m.SelectedBurstIndex].Hashes)
@@ -205,14 +241,23 @@ func (m Model) calcCPM() float64 {
 }
 
 func rightPaneDims(totalW, totalH int) (w, h int) {
-	w = totalW*60/100 - 4
-	h = totalH - 4
+	leftW := totalW * 70 / 100
+	rightW := totalW - leftW
+	w = rightW - 4
+	h = totalH - 6
+	if w < 1 {
+		w = 1
+	}
+	if h < 1 {
+		h = 1
+	}
 	return
 }
 
 func (m Model) Verdict() string {
 	spikes := 0
 	untested := 0
+	leaks := 0
 	for _, b := range m.Bursts {
 		if (b.ComplexityAfter - b.ComplexityBefore) > 10 {
 			spikes++
@@ -220,10 +265,267 @@ func (m Model) Verdict() string {
 		if len(b.UntestedFunctions) > 0 {
 			untested++
 		}
+		if len(b.SecretLeaks) > 0 {
+			leaks++
+		}
 	}
 	dur := m.sessionStart
 	elapsed := time.Since(dur).Round(time.Second)
 	min := int(elapsed.Minutes()) % 60
 	s := int(elapsed.Seconds()) % 60
-	return fmt.Sprintf("session: %d bursts, %d complexity spikes, %d untested, duration %02d:%02d", len(m.Bursts), spikes, untested, min, s)
+	return fmt.Sprintf("session: %d bursts, %d complexity spikes, %d untested, %d secret leaks, duration %02d:%02d", len(m.Bursts), spikes, untested, leaks, min, s)
+}
+
+func (m Model) TreemapDims() (w, h int) {
+	leftW := m.width * 70 / 100
+	contentH := m.height - 2
+	w = leftW - 2
+	h = contentH - 2
+	if w < 1 {
+		w = 1
+	}
+	if h < 3 {
+		h = 3
+	}
+	return w, h
+}
+
+func getAvailDims(box PositionedBox) (availW, availH int) {
+	hasBorder := box.IsDir
+	rW := box.W - 1
+	rH := box.H - 1
+	if hasBorder {
+		availW = rW - 2
+		availH = rH - 2
+	} else {
+		availW = rW
+		availH = rH
+	}
+	if availW < 0 {
+		availW = 0
+	}
+	if availH < 0 {
+		availH = 0
+	}
+	return
+}
+
+func (m Model) getLayout(w, h int) ([]*treemapItem, []PositionedBox) {
+	if m.layoutCache == nil {
+		m.layoutCache = &LayoutCache{}
+	}
+	if m.layoutCache.boxes != nil && m.layoutCache.w == w && m.layoutCache.h == h && m.layoutCache.dir == m.CurrentDir && m.layoutCache.commitCnt == len(m.commitTimestamps) {
+		return m.layoutCache.parentItems, m.layoutCache.boxes
+	}
+	items, boxes := m.layoutTreemap(w, h)
+	m.layoutCache.w = w
+	m.layoutCache.h = h
+	m.layoutCache.dir = m.CurrentDir
+	m.layoutCache.commitCnt = len(m.commitTimestamps)
+	m.layoutCache.boxes = boxes
+	m.layoutCache.parentItems = items
+	return items, boxes
+}
+
+func (m Model) layoutTreemap(w, h int) ([]*treemapItem, []PositionedBox) {
+	if w <= 0 || h <= 0 {
+		return nil, nil
+	}
+	allGroups := m.getAllGroupedItems()
+	if len(allGroups) == 0 {
+		return nil, nil
+	}
+
+	zoomDepth := 0
+	actualDir := m.CurrentDir
+	for strings.HasSuffix(actualDir, "/?others") {
+		zoomDepth++
+		actualDir = strings.TrimSuffix(actualDir, "/?others")
+	}
+	if actualDir == "?others" {
+		zoomDepth++
+	}
+
+	for {
+		K := len(allGroups)
+		for K > 0 {
+			var currentItems []*treemapItem
+			if K == len(allGroups) {
+				currentItems = allGroups
+			} else {
+				currentItems = make([]*treemapItem, 0, K)
+				currentItems = append(currentItems, allGroups[:K-1]...)
+				
+				otherLines := 0
+				var otherTouched time.Time
+				for _, it := range allGroups[K-1:] {
+					otherLines += it.lines
+					if it.lastTouched.After(otherTouched) {
+						otherTouched = it.lastTouched
+					}
+				}
+				if otherLines > 0 {
+					path := "?others"
+					if m.CurrentDir != "" {
+						path = m.CurrentDir + "/?others"
+					}
+					currentItems = append(currentItems, &treemapItem{
+						path:        path,
+						name:        fmt.Sprintf("+%d others", len(allGroups)-K+1),
+						isDir:       true,
+						lines:       otherLines,
+						lastTouched: otherTouched,
+					})
+				}
+			}
+
+			sort.Slice(currentItems, func(i, j int) bool {
+				wi := math.Log2(float64(currentItems[i].lines) + 1.0)
+				if wi < 1.0 {
+					wi = 1.0
+				}
+				wj := math.Log2(float64(currentItems[j].lines) + 1.0)
+				if wj < 1.0 {
+					wj = 1.0
+				}
+				if wi == wj {
+					if currentItems[i].isDir != currentItems[j].isDir {
+						return currentItems[i].isDir
+					}
+					return currentItems[i].name < currentItems[j].name
+				}
+				return wi > wj
+			})
+
+			weights := make([]TreemapItemWeight, len(currentItems))
+			for i, item := range currentItems {
+				weight := math.Log2(float64(item.lines) + 1.0)
+				if weight < 1.0 {
+					weight = 1.0
+				}
+				weights[i] = TreemapItemWeight{
+					Path:        item.path,
+					Name:        item.name,
+					IsDir:       item.isDir,
+					Lines:       item.lines,
+					LastTouched: item.lastTouched,
+					ColorIndex:  i,
+					Weight:      weight,
+				}
+			}
+
+			boxes := Squarify(weights, Rect{X: 0, Y: 0, W: w, H: h})
+
+			if K <= 1 || len(boxes) <= 1 {
+				return currentItems, boxes
+			}
+
+			var totalWeight float64
+			for _, wt := range weights {
+				totalWeight += wt.Weight
+			}
+
+			smallCount := 0
+			for _, wt := range weights {
+				if wt.Weight < totalWeight*0.15 {
+					smallCount++
+				}
+			}
+
+			if smallCount <= 4 {
+				if zoomDepth > 0 && K < len(allGroups) {
+					allGroups = allGroups[K-1:]
+					zoomDepth--
+					break
+				}
+				return currentItems, boxes
+			}
+			K--
+		}
+		if K <= 0 {
+			break
+		}
+	}
+
+	return nil, nil
+}
+
+func (m Model) getAllGroupedItems() []*treemapItem {
+	groups := make(map[string]*treemapItem)
+	
+	actualDir := m.CurrentDir
+	
+	// Strip all occurrences of ?others from actualDir for file matching
+	actualDir = strings.ReplaceAll(actualDir, "?others/", "")
+	actualDir = strings.ReplaceAll(actualDir, "/?others", "")
+	if actualDir == "?others" {
+		actualDir = ""
+	}
+
+	prefix := actualDir
+	if prefix != "" && !strings.HasSuffix(prefix, "/") {
+		prefix += "/"
+	}
+
+	for _, c := range m.Treemap {
+		if prefix != "" && !strings.HasPrefix(c.Path, prefix) {
+			continue
+		}
+
+		rel := c.Path[len(prefix):]
+		parts := strings.Split(rel, "/")
+		childName := parts[0]
+		if childName == "" {
+			continue
+		}
+
+		fullChildPath := childName
+		if m.CurrentDir != "" {
+			// Keep the virtual zoom history in the new path!
+			fullChildPath = m.CurrentDir + "/" + childName
+			// Clean it up just in case (e.g. root case)
+			if m.CurrentDir == "" {
+				fullChildPath = childName
+			}
+		}
+
+		isDir := len(parts) > 1
+
+		item, exists := groups[childName]
+		if !exists {
+			item = &treemapItem{
+				path:        fullChildPath,
+				name:        childName,
+				isDir:       isDir,
+				lines:       0,
+				lastTouched: c.LastTouched,
+			}
+			groups[childName] = item
+		}
+
+		item.lines += c.Lines
+		if c.LastTouched.After(item.lastTouched) {
+			item.lastTouched = c.LastTouched
+		}
+		if isDir {
+			item.isDir = true
+		}
+	}
+
+	var items []*treemapItem
+	for _, item := range groups {
+		items = append(items, item)
+	}
+
+	sort.Slice(items, func(i, j int) bool {
+		if items[i].lines == items[j].lines {
+			if items[i].isDir != items[j].isDir {
+				return items[i].isDir
+			}
+			return items[i].name < items[j].name
+		}
+		return items[i].lines > items[j].lines
+	})
+
+	return items
 }

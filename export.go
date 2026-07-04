@@ -23,6 +23,7 @@ type exportBurst struct {
 	FilesChanged int      `json:"files_changed"`
 	LinesAdded   int      `json:"lines_added"`
 	LinesRemoved int      `json:"lines_removed"`
+	SecretLeaks  []string `json:"secret_leaks,omitempty"`
 }
 
 func runExport(args []string) {
@@ -57,6 +58,7 @@ func runExport(args []string) {
 			FilesChanged: b.FilesChanged,
 			LinesAdded:   b.LinesAdded,
 			LinesRemoved: b.LinesRemoved,
+			SecretLeaks:  b.SecretLeaks,
 		}
 		if err := enc.Encode(eb); err != nil {
 			fmt.Fprintf(os.Stderr, "ghostlog: write error: %v\n", err)

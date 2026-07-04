@@ -2,84 +2,70 @@ package tui
 
 import (
 	"fmt"
-	"math"
-	"path/filepath"
-	"sort"
+
 	"strings"
 	"time"
 
 	"github.com/charmbracelet/lipgloss"
+	"github.com/mattn/go-runewidth"
 	"github.com/salarkhannn/ghostlog/internal/analyzer"
 	"github.com/salarkhannn/ghostlog/internal/tui/formatting"
 )
 
+type cell struct {
+	char  rune
+	style *lipgloss.Style
+	skip  bool
+}
+
 var (
-	bg       = lipgloss.Color("#1a1a2e")
-	accent   = lipgloss.Color("#e94560")
-	muted    = lipgloss.Color("#6e6e8e")
-	text     = lipgloss.Color("#c9d1d9")
-	selected = lipgloss.Color("#16213e")
-	border   = lipgloss.Color("#2a2a4a")
-	green    = lipgloss.Color("#3fb950")
-	red      = lipgloss.Color("#f85149")
-	yellow   = lipgloss.Color("#f0a500")
+	bg       = BgColor
+	accent   = ActiveColor
+	muted    = MutedColor
+	text     = FgColor
+	selected = SelectedColor
+	border   = BorderColor
+	green    = OkColor
+	red      = SoftRedColor
+	yellow   = WarnColor
 
-	barStyle = lipgloss.NewStyle().
-			Background(bg).
-			Foreground(muted).
-			Padding(0, 1)
+	barStyle      = BarStyle
+	accentStyle   = AccentStyle
+	selectedStyle = SelectedStyle
+	dimStyle      = DimStyle
+	okStyle       = OkStyle
+	conflictStyle = ConflictStyle
+	addStyle      = AddStyle
+	subStyle      = SubStyle
 
-	accentStyle = lipgloss.NewStyle().
-			Foreground(accent).
-			Bold(true)
-
-	selectedStyle = lipgloss.NewStyle().
-			Background(selected).
-			Foreground(text).
-			Bold(true)
-
-	dimStyle = lipgloss.NewStyle().
-			Foreground(muted)
-
-	okStyle = lipgloss.NewStyle().
-		Foreground(green)
-
-	conflictStyle = lipgloss.NewStyle().
-			Foreground(yellow).
-			Bold(true)
-
-	addStyle = lipgloss.NewStyle().Foreground(green)
-	subStyle = lipgloss.NewStyle().Foreground(red)
-
-	paneStyle = lipgloss.NewStyle().
-			Border(lipgloss.NormalBorder()).
-			BorderForeground(border).
-			Background(bg)
+	paneStyle     = RightPaneStyle
 )
 
 func (m Model) View() string {
+	width := m.width
+
 	if !m.vpReady {
-		return barStyle.Width(m.width).Render("ghostlog: waiting for terminal size...")
+		return barStyle.Width(width).Render("ghostlog: waiting for terminal size...")
 	}
 
-	top := m.renderTopBar()
-	bot := m.renderBottomBar()
+	top := m.renderTopBar(width)
+	bot := m.renderBottomBar(width)
 
 	contentH := m.height - lipgloss.Height(top) - lipgloss.Height(bot)
-	leftW := m.width * 40 / 100
-	rightW := m.width - leftW
+	leftW := width * 70 / 100
+	rightW := width - leftW
 
 	var left string
 	if m.ViewMode == "treemap" {
-		left = paneStyle.
-			Width(leftW - 2).
-			Height(contentH - 2).
-			Render(m.renderTreemap(leftW-4, contentH-4))
+		left = LeftPaneStyle.
+			Width(leftW).
+			Height(contentH).
+			Render(m.renderTreemap(leftW-2, contentH))
 	} else {
-		left = paneStyle.
-			Width(leftW - 2).
-			Height(contentH - 2).
-			Render(m.renderBurstList(leftW - 4))
+		left = LeftPaneStyle.
+			Width(leftW).
+			Height(contentH).
+			Render(m.renderBurstList(leftW - 2))
 	}
 
 	right := paneStyle.
@@ -88,19 +74,25 @@ func (m Model) View() string {
 		Render(m.vp.View())
 
 	body := lipgloss.JoinHorizontal(lipgloss.Top, left, right)
-	return lipgloss.JoinVertical(lipgloss.Left, top, body, bot)
+	
+	finalOutput := lipgloss.JoinVertical(lipgloss.Left, top, body, bot)
+	
+	rootStyle := lipgloss.NewStyle().Background(bg)
+	
+	// No DECAWM hacks needed! We solve this via phantom characters (\uE000)
+	return rootStyle.Render(finalOutput)
 }
 
-func (m Model) renderTopBar() string {
+func (m Model) renderTopBar(w int) string {
 	session := fmtDuration(time.Since(m.sessionStart))
 	speed := accentStyle.Render(fmt.Sprintf("[AGENT SPEED: %.1f commits/min]", m.CPSMetric))
 	sess := fmt.Sprintf("SESSION: %s", session)
 	watching := dimStyle.Render("watching " + m.repoPath)
 	mid := fmt.Sprintf("%s | %s | %s", speed, sess, watching)
-	return barStyle.Width(m.width).Render(mid)
+	return barStyle.Width(w).Render(mid)
 }
 
-func (m Model) renderBottomBar() string {
+func (m Model) renderBottomBar(w int) string {
 	scroll := "auto: off"
 	if m.AutoScroll {
 		scroll = "auto: on"
@@ -112,7 +104,7 @@ func (m Model) renderBottomBar() string {
 		len(m.Bursts),
 		scroll,
 	)
-	return barStyle.Width(m.width).Render(line)
+	return barStyle.Width(w).Render(line)
 }
 
 func (m Model) renderBurstList(w int) string {
@@ -140,7 +132,9 @@ func formatBurst(n int, b analyzer.Burst, w int) string {
 	}
 
 	status := okStyle.Render("[OK]")
-	if b.HasConflict || (b.ComplexityAfter-b.ComplexityBefore) > 10 || len(b.UntestedFunctions) > 0 {
+	if len(b.SecretLeaks) > 0 {
+		status = lipgloss.NewStyle().Foreground(FlashColor).Bold(true).Render("[WARN - secret-leak]")
+	} else if b.HasConflict || (b.ComplexityAfter-b.ComplexityBefore) > 10 || len(b.UntestedFunctions) > 0 {
 		status = conflictStyle.Render("[WARN]")
 	}
 
@@ -175,191 +169,27 @@ type treemapItem struct {
 	lastTouched time.Time
 }
 
-func (m Model) getGroupedItems() []*treemapItem {
-	groups := make(map[string]*treemapItem)
-	prefix := m.CurrentDir
-	if prefix != "" && !strings.HasSuffix(prefix, "/") {
-		prefix += "/"
-	}
-
-	for _, c := range m.Treemap {
-		if prefix != "" && !strings.HasPrefix(c.Path, prefix) {
-			continue
-		}
-
-		rel := c.Path[len(prefix):]
-		parts := strings.Split(rel, "/")
-		childName := parts[0]
-		if childName == "" {
-			continue
-		}
-
-		fullChildPath := childName
-		if m.CurrentDir != "" {
-			fullChildPath = filepath.Join(m.CurrentDir, childName)
-		}
-
-		isDir := len(parts) > 1
-
-		item, exists := groups[childName]
-		if !exists {
-			item = &treemapItem{
-				path:        fullChildPath,
-				name:        childName,
-				isDir:       isDir,
-				lines:       0,
-				lastTouched: c.LastTouched,
-			}
-			groups[childName] = item
-		}
-
-		item.lines += c.Lines
-		if c.LastTouched.After(item.lastTouched) {
-			item.lastTouched = c.LastTouched
-		}
-		if isDir {
-			item.isDir = true
-		}
-	}
-
-	var items []*treemapItem
-	for _, item := range groups {
-		items = append(items, item)
-	}
-
-	sort.Slice(items, func(i, j int) bool {
-		if items[i].lines == items[j].lines {
-			if items[i].isDir != items[j].isDir {
-				return items[i].isDir
-			}
-			return items[i].name < items[j].name
-		}
-		return items[i].lines > items[j].lines
-	})
-
-	// Cap at 11 items to prevent terminal layout density breakdown
-	if len(items) > 11 {
-		topItems := items[:10]
-		otherLines := 0
-		var otherTouched time.Time
-		for _, it := range items[10:] {
-			otherLines += it.lines
-			if it.lastTouched.After(otherTouched) {
-				otherTouched = it.lastTouched
-			}
-		}
-		others := &treemapItem{
-			path:        "",
-			name:        fmt.Sprintf("+%d others", len(items)-10),
-			isDir:       false,
-			lines:       otherLines,
-			lastTouched: otherTouched,
-		}
-		items = append(topItems, others)
-	}
-
-	return items
-}
-
-type treemapBox struct {
-	path        string
-	name        string
-	isDir       bool
-	lines       int
-	lastTouched time.Time
-	colorIndex  int
-	x, y, w, h  int
-	weight      float64
-}
-
-func partition(boxes []*treemapBox, x, y, w, h int) {
-	if len(boxes) == 0 {
-		return
-	}
-	if len(boxes) == 1 {
-		boxes[0].x = x
-		boxes[0].y = y
-		boxes[0].w = w
-		boxes[0].h = h
-		return
-	}
-
-	total := 0.0
-	for _, b := range boxes {
-		total += b.weight
-	}
-	if total == 0 {
-		for _, b := range boxes {
-			b.weight = 1.0
-		}
-		total = float64(len(boxes))
-	}
-
-	firstWeight := boxes[0].weight
-	ratio := firstWeight / total
-
-	if float64(w) > 2.0*float64(h) {
-		splitW := int(float64(w) * ratio)
-		if splitW < 1 {
-			splitW = 1
-		}
-		if splitW >= w {
-			splitW = w - 1
-		}
-		partition(boxes[:1], x, y, splitW, h)
-		partition(boxes[1:], x+splitW, y, w-splitW, h)
-	} else {
-		splitH := int(float64(h) * ratio)
-		if splitH < 1 {
-			splitH = 1
-		}
-		if splitH >= h {
-			splitH = h - 1
-		}
-		partition(boxes[:1], x, y, w, splitH)
-		partition(boxes[1:], x, y+splitH, w, h-splitH)
-	}
-}
-
-type cell struct {
-	char  rune
-	style lipgloss.Style
-	skip  bool
-}
-
 func (m Model) renderTreemap(w, h int) string {
 	if m.TotalLines == 0 || len(m.Treemap) == 0 {
 		return dimStyle.Render("Loading treemap...")
 	}
 
-	grouped := m.getGroupedItems()
-	if len(grouped) == 0 {
+	gridH := h - 2
+	if gridH < 3 {
+		gridH = 3
+	}
+
+	items, boxes := m.getLayout(w, gridH)
+	if len(items) == 0 {
 		return dimStyle.Render("Empty directory.\n[Backspace] Go back")
 	}
 
 	selIdx := m.SelectedTreemapIndex
-	if selIdx >= len(grouped) {
-		selIdx = len(grouped) - 1
+	if selIdx >= len(items) {
+		selIdx = len(items) - 1
 	}
 	if selIdx < 0 {
 		selIdx = 0
-	}
-
-	boxes := make([]*treemapBox, len(grouped))
-	for i, item := range grouped {
-		weight := math.Log2(float64(item.lines) + 1.0)
-		if weight < 1.0 {
-			weight = 1.0
-		}
-		boxes[i] = &treemapBox{
-			path:        item.path,
-			name:        item.name,
-			isDir:       item.isDir,
-			lines:       item.lines,
-			lastTouched: item.lastTouched,
-			colorIndex:  i,
-			weight:      weight,
-		}
 	}
 
 	breadcrumb := "📁 [root]"
@@ -370,13 +200,6 @@ func (m Model) renderTreemap(w, h int) string {
 
 	controls := dimStyle.Render("[Tab/H/L] Navigate | [Enter] Zoom In | [Backspace] Zoom Out")
 
-	gridH := h - 2
-	if gridH < 3 {
-		gridH = 3
-	}
-
-	partition(boxes, 0, 0, w, gridH)
-
 	grid := make([][]cell, gridH)
 	for i := range grid {
 		grid[i] = make([]cell, w)
@@ -385,39 +208,30 @@ func (m Model) renderTreemap(w, h int) string {
 		}
 	}
 
-	draw := func(cx, cy int, r rune, style lipgloss.Style) {
+	draw := func(cx, cy int, r rune, style *lipgloss.Style) {
 		if cx >= 0 && cx < w && cy >= 0 && cy < gridH {
 			grid[cy][cx] = cell{char: r, style: style}
 		}
 	}
 
 	for i, box := range boxes {
-		if box.w <= 0 || box.h <= 0 {
+		rW := box.W - 1
+		rH := box.H - 1
+		if rW <= 0 || rH <= 0 {
 			continue
 		}
 
 		isSel := i == selIdx
-		color := fadeColor(box.lastTouched, box.colorIndex)
+		color := fadeColor(box.LastTouched, box.ColorIndex)
 
 		var borderStyle lipgloss.Style
 		if isSel {
-			borderStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#00f0ff")).Bold(true)
+			borderStyle = lipgloss.NewStyle().Foreground(ActiveColor).Bold(true)
 		} else {
 			borderStyle = lipgloss.NewStyle().Foreground(color)
 		}
 
-		if box.w < 2 || box.h < 2 {
-			char := '░'
-			if isSel {
-				char = '█'
-			}
-			for cy := box.y; cy < box.y+box.h; cy++ {
-				for cx := box.x; cx < box.x+box.w; cx++ {
-					draw(cx, cy, char, borderStyle)
-				}
-			}
-			continue
-		}
+		hasBorder := isSel || (box.IsDir && box.W >= 3 && box.H >= 3)
 
 		var topL, topR, botL, botR, horiz, vert rune
 		if isSel {
@@ -426,118 +240,189 @@ func (m Model) renderTreemap(w, h int) string {
 			topL, topR, botL, botR, horiz, vert = '┌', '┐', '└', '┘', '─', '│'
 		}
 
-		for cy := box.y; cy < box.y+box.h; cy++ {
-			for cx := box.x; cx < box.x+box.w; cx++ {
-				isTop := cy == box.y
-				isBottom := cy == box.y+box.h-1
-				isLeft := cx == box.x
-				isRight := cx == box.x+box.w-1
+		bgStyle := lipgloss.NewStyle().Background(color)
+		cellBorderStyle := borderStyle.Background(color)
 
-				if isTop && isLeft {
-					draw(cx, cy, topL, borderStyle)
-				} else if isTop && isRight {
-					draw(cx, cy, topR, borderStyle)
-				} else if isBottom && isLeft {
-					draw(cx, cy, botL, borderStyle)
-				} else if isBottom && isRight {
-					draw(cx, cy, botR, borderStyle)
-				} else if isTop || isBottom {
-					draw(cx, cy, horiz, borderStyle)
-				} else if isLeft || isRight {
-					draw(cx, cy, vert, borderStyle)
+		for cy := box.Y; cy < box.Y+rH; cy++ {
+			for cx := box.X; cx < box.X+rW; cx++ {
+				if hasBorder {
+					isTop := cy == box.Y
+					isBottom := cy == box.Y+rH-1
+					isLeft := cx == box.X
+					isRight := cx == box.X+rW-1
+
+					if isTop && isLeft {
+						draw(cx, cy, topL, &cellBorderStyle)
+					} else if isTop && isRight {
+						draw(cx, cy, topR, &cellBorderStyle)
+					} else if isBottom && isLeft {
+						draw(cx, cy, botL, &cellBorderStyle)
+					} else if isBottom && isRight {
+						draw(cx, cy, botR, &cellBorderStyle)
+					} else if isTop || isBottom {
+						draw(cx, cy, horiz, &cellBorderStyle)
+					} else if isLeft || isRight {
+						draw(cx, cy, vert, &cellBorderStyle)
+					} else {
+						draw(cx, cy, ' ', &bgStyle)
+					}
+				} else {
+					draw(cx, cy, ' ', &bgStyle)
 				}
 			}
 		}
 
-		availableWidth := box.w - 2
-		if availableWidth > 0 && box.h >= 3 {
-			emoji := ""
-			emojiWidth := 0
-			if box.isDir {
-				emoji = "📁"
-				emojiWidth = 3
-			} else if strings.HasPrefix(box.name, "+") {
-				// No emoji
-			} else if strings.HasSuffix(box.name, ".go") {
-				emoji = "🐹"
-				emojiWidth = 3
-			} else {
-				emoji = "📄"
-				emojiWidth = 3
-			}
+		var availW, availH int
+		var textStartX, textStartY int
+		if hasBorder {
+			availW = rW - 2
+			availH = rH - 2
+			textStartX = box.X + 1
+			textStartY = box.Y + 1
+		} else {
+			availW = rW
+			availH = rH
+			textStartX = box.X
+			textStartY = box.Y
+		}
+		if availW < 0 {
+			availW = 0
+		}
+		if availH < 0 {
+			availH = 0
+		}
 
-			nameRunes := []rune(box.name)
-			if box.isDir {
-				nameRunes = append(nameRunes, '/')
-			}
+		var textStyle lipgloss.Style
+		if isSel {
+			textStyle = lipgloss.NewStyle().Background(color).Foreground(FgColor).Bold(true)
+		} else if !box.LastTouched.IsZero() && time.Since(box.LastTouched).Seconds() < 2.0 {
+			textStyle = lipgloss.NewStyle().Background(color).Foreground(FgColor).Bold(true)
+		} else {
+			textStyle = lipgloss.NewStyle().Background(color).Foreground(FgColor)
+		}
 
-			if emojiWidth+len(nameRunes) > availableWidth {
-				if availableWidth >= 6 {
-					allowedTextWidth := availableWidth - emojiWidth
-					if allowedTextWidth > 3 {
-						nameRunes = append(nameRunes[:allowedTextWidth-3], '.', '.', '.')
-					} else {
-						nameRunes = nameRunes[:allowedTextWidth]
+		emoji := ""
+		if box.IsDir {
+			switch m.IconMode {
+			case IconModeAscii:
+				emoji = "[D] "
+			case IconModeNerdFont:
+				emoji = "\uf07b  "
+			default:
+				emoji = "📁 "
+			}
+		} else {
+			emoji = getFileIcon(box.Name, m.IconMode)
+		}
+
+		stableW, stableH := rW, rH
+		if box.IsDir {
+			stableW, stableH = rW-2, rH-2
+		}
+
+		tier := getLabelTier(stableW, stableH, box.Lines)
+		
+
+
+		isTier2 := tier == 2
+		isTier1 := tier == 1
+		isTier0 := tier == 0
+
+		innerDraw := func(cx, cy int, r rune, style *lipgloss.Style) {
+			if cx >= textStartX && cx < textStartX+availW && cy >= textStartY && cy < textStartY+availH {
+				draw(cx, cy, r, style)
+			}
+		}
+
+		if isTier0 {
+			if availW >= 3 && availH >= 1 && emoji != "" {
+				emojiW := runewidth.StringWidth(emoji)
+				centerX := textStartX + (availW-emojiW)/2
+				centerY := textStartY + availH/2
+				currentX := centerX
+				for _, r := range emoji {
+					rw := runewidth.RuneWidth(r)
+					if currentX >= 0 && currentX < w && centerY >= 0 && centerY < gridH {
+						innerDraw(currentX, centerY, r, &textStyle)
 					}
-				} else {
-					emoji = ""
-					emojiWidth = 0
-					if len(nameRunes) > availableWidth {
-						if availableWidth > 3 {
-							nameRunes = append(nameRunes[:availableWidth-3], '.', '.', '.')
-						} else {
-							nameRunes = nameRunes[:availableWidth]
+					currentX++
+					for i := 1; i < rw; i++ {
+						if currentX >= 0 && currentX < w && centerY >= 0 && centerY < gridH {
+							grid[centerY][currentX] = cell{skip: true}
 						}
+						currentX++
 					}
 				}
 			}
+			continue
+		}
 
-			totalWidth := emojiWidth + len(nameRunes)
-			startX := box.x + (box.w-totalWidth)/2
-			centerY := box.y + box.h/2
-			if box.h >= 4 && box.h%2 == 0 {
-				centerY = box.y + box.h/2 - 1
-			}
+		nameStr := emoji + box.Name
+		if box.IsDir {
+			nameStr += "/"
+		}
 
-			var textStyle lipgloss.Style
-			if isSel {
-				textStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#ffffff")).Bold(true)
-			} else if !box.lastTouched.IsZero() && time.Since(box.lastTouched).Seconds() < 2.0 {
-				textStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#ffffff")).Bold(true)
-			} else {
-				textStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#a0a0c0"))
-			}
-
+		if isTier1 {
+			centerY := textStartY + availH/2
+			displayStr := runewidth.Truncate(nameStr, stableW, "...")
+			totalWidth := runewidth.StringWidth(displayStr)
+			startX := textStartX + (availW-totalWidth)/2
 			currentX := startX
-			if emoji != "" {
-				emojiRune := []rune(emoji)[0]
+
+			for _, r := range displayStr {
+				rw := runewidth.RuneWidth(r)
 				if currentX >= 0 && currentX < w && centerY >= 0 && centerY < gridH {
-					grid[centerY][currentX] = cell{char: emojiRune, style: textStyle}
+					innerDraw(currentX, centerY, r, &textStyle)
 				}
 				currentX++
-				if currentX >= 0 && currentX < w && centerY >= 0 && centerY < gridH {
-					grid[centerY][currentX] = cell{skip: true}
+				for i := 1; i < rw; i++ {
+					if currentX >= 0 && currentX < w && centerY >= 0 && centerY < gridH {
+						grid[centerY][currentX] = cell{skip: true}
+					}
+					currentX++
+				}
+			}
+		}
+
+		if isTier2 {
+			line1Y := textStartY + availH/2 - 1
+			line2Y := textStartY + availH/2
+
+			displayStr := runewidth.Truncate(nameStr, stableW, "...")
+			totalWidth := runewidth.StringWidth(displayStr)
+			startX := textStartX + (availW-totalWidth)/2
+			currentX := startX
+
+			for _, r := range displayStr {
+				rw := runewidth.RuneWidth(r)
+				if currentX >= 0 && currentX < w && line1Y >= 0 && line1Y < gridH {
+					innerDraw(currentX, line1Y, r, &textStyle)
 				}
 				currentX++
-				if currentX >= 0 && currentX < w && centerY >= 0 && centerY < gridH {
-					grid[centerY][currentX] = cell{char: ' ', style: textStyle}
+				for i := 1; i < rw; i++ {
+					if currentX >= 0 && currentX < w && line1Y >= 0 && line1Y < gridH {
+						grid[line1Y][currentX] = cell{skip: true}
+					}
+					currentX++
 				}
-				currentX++
 			}
 
-			for _, r := range nameRunes {
-				if currentX >= 0 && currentX < w && centerY >= 0 && centerY < gridH {
-					grid[centerY][currentX] = cell{char: r, style: textStyle}
-				}
-				currentX++
-			}
-
-			if box.h >= 4 {
-				linesLabel := fmt.Sprintf("%d L", box.lines)
-				if len(linesLabel) <= availableWidth {
-					startLinesX := box.x + (box.w-len(linesLabel))/2
-					for idx, r := range linesLabel {
-						draw(startLinesX+idx, centerY+1, r, textStyle)
+			linesLabel := fmt.Sprintf("%d L", box.Lines)
+			linesWidth := runewidth.StringWidth(linesLabel)
+			if linesWidth <= availW {
+				startLinesX := textStartX + (availW-linesWidth)/2
+				currentX = startLinesX
+				for _, r := range linesLabel {
+					rw := runewidth.RuneWidth(r)
+					if currentX >= 0 && currentX < w && line2Y >= 0 && line2Y < gridH {
+						innerDraw(currentX, line2Y, r, &textStyle)
+					}
+					currentX++
+					for i := 1; i < rw; i++ {
+						if currentX >= 0 && currentX < w && line2Y >= 0 && line2Y < gridH {
+							grid[line2Y][currentX] = cell{skip: true}
+						}
+						currentX++
 					}
 				}
 			}
@@ -548,17 +433,37 @@ func (m Model) renderTreemap(w, h int) string {
 	sb.WriteString(breadcrumb)
 	sb.WriteRune('\n')
 
+	defaultGridStyle := lipgloss.NewStyle().Background(bg)
+
 	for _, row := range grid {
-		for _, cell := range row {
-			if cell.skip {
-				continue
-			}
-			if cell.char == ' ' {
-				sb.WriteRune(' ')
-			} else {
-				sb.WriteString(cell.style.Render(string(cell.char)))
+		var currentStyle *lipgloss.Style
+		var currentRun strings.Builder
+
+		flush := func() {
+			if currentRun.Len() > 0 {
+				if currentStyle != nil {
+					sb.WriteString(currentStyle.Render(currentRun.String()))
+				} else {
+					sb.WriteString(defaultGridStyle.Render(currentRun.String()))
+				}
+				currentRun.Reset()
 			}
 		}
+
+		for _, c := range row {
+			if c.skip {
+				continue
+			}
+			if c.char == 0 {
+				c.char = ' '
+			}
+			if c.style != currentStyle {
+				flush()
+				currentStyle = c.style
+			}
+			currentRun.WriteRune(c.char)
+		}
+		flush()
 		sb.WriteRune('\n')
 	}
 
@@ -567,7 +472,7 @@ func (m Model) renderTreemap(w, h int) string {
 }
 
 func fadeColor(lastTouched time.Time, index int) lipgloss.Color {
-	baseColors := []string{"#3a3a5a", "#2d2d46", "#45456b", "#363654", "#292940"}
+	baseColors := TreemapBaseColors
 	baseColor := baseColors[index%len(baseColors)]
 	
 	if lastTouched.IsZero() {
@@ -582,13 +487,117 @@ func fadeColor(lastTouched time.Time, index int) lipgloss.Color {
 		ratio = 0
 	}
 	
-	// Parse the base color hex string to RGB
 	var br, bg, bb int
 	fmt.Sscanf(baseColor, "#%02x%02x%02x", &br, &bg, &bb)
 	
-	// Highlight RGB: R=233, G=69, B=96 (#e94560)
-	r := int(float64(br) + (233.0 - float64(br))*ratio)
-	g := int(float64(bg) + (69.0 - float64(bg))*ratio)
-	b := int(float64(bb) + (96.0 - float64(bb))*ratio)
+	r := int(float64(br) + (255.0 - float64(br))*ratio)
+	g := int(float64(bg) + (0.0 - float64(bg))*ratio)
+	b := int(float64(bb) + (85.0 - float64(bb))*ratio)
 	return lipgloss.Color(fmt.Sprintf("#%02x%02x%02x", r, g, b))
+}
+
+func getFileIcon(name string, mode IconMode) string {
+	if strings.HasPrefix(name, "+") {
+		return ""
+	}
+	lower := strings.ToLower(name)
+	ext := ""
+	if idx := strings.LastIndex(lower, "."); idx != -1 {
+		ext = lower[idx:]
+	}
+
+	if mode == IconModeAscii {
+		return "[F] "
+	}
+	
+	if mode == IconModeEmoji {
+		switch ext {
+		case ".go": return "🐹 "
+		case ".py": return "🐍 "
+		case ".rs": return "🦀 "
+		case ".rb": return "💎 "
+		case ".js", ".jsx": return "🟨 "
+		case ".ts", ".tsx": return "🟦 "
+		case ".java", ".class", ".jar": return "☕ "
+		case ".cpp", ".cc", ".cxx", ".hpp", ".h", ".c": return "⚙️ "
+		case ".sh", ".bash", ".zsh": return "🐚 "
+		case ".php": return "🐘 "
+		case ".cs": return "🎮 "
+		case ".swift": return "🍎 "
+		case ".kt", ".kts": return "🤖 "
+		case ".html", ".htm": return "🌐 "
+		case ".css", ".scss", ".sass", ".less": return "🎨 "
+		case ".json", ".yaml", ".yml", ".toml", ".xml", ".ini": return "📝 "
+		case ".md": return "📖 "
+		case ".sql", ".db", ".sqlite": return "🗄️ "
+		case ".dockerfile": return "🐳 "
+		case ".txt", ".log", ".conf": return "📄 "
+		}
+		if lower == "dockerfile" { return "🐳 " }
+		if lower == "makefile" { return "🛠️ " }
+		if lower == "go.mod" || lower == "go.sum" { return "🐹 " }
+		return "📄 "
+	}
+
+	// NerdFont mode
+	if mode == IconModeNerdFont {
+		icon := "\uf15b  " // default
+		switch ext {
+		case ".go": icon = "\U000f07d3  "
+		case ".py": icon = "\ue73c  "
+		case ".rs": icon = "\ue7a8  "
+		case ".rb": icon = "\ue739  "
+		case ".js", ".jsx": icon = "\ue781  "
+		case ".ts", ".tsx": icon = "\ue8ca  "
+		case ".java", ".class", ".jar": icon = "\ue738  "
+		case ".cpp", ".cc", ".cxx", ".hpp", ".h": icon = "\ue61d  "
+		case ".c": icon = "\ue61e  "
+		case ".sh", ".bash", ".zsh": icon = "\ue760  "
+		case ".php": icon = "\ue73d  "
+		case ".cs": icon = "\ue7b2  "
+		case ".swift": icon = "\ue755  "
+		case ".kt", ".kts": icon = "\ue81b  "
+		case ".html", ".htm": icon = "\ue736  "
+		case ".css", ".scss", ".sass", ".less": icon = "\ue749  "
+		case ".json", ".yaml", ".yml", ".toml", ".xml", ".ini": icon = "\ue80b  "
+		case ".md": icon = "\ue73e  "
+		case ".sql", ".db", ".sqlite": icon = "\ue706  "
+		case ".dockerfile": icon = "\uf308  "
+		case ".txt", ".log", ".conf": icon = "\uf15b  "
+		}
+		
+		if lower == "dockerfile" { icon = "\uf308  " }
+		if lower == "makefile" { icon = "\ue795  " }
+		if lower == "go.mod" || lower == "go.sum" { icon = "\U000f07d3  " }
+		
+		return icon
+	}
+	
+	return "\uf15b  "
+}
+
+func getLabelTier(w, h, lines int) int {
+	intended := 2
+	if lines < 10 {
+		intended = 1
+	}
+	if lines == 0 {
+		intended = 0
+	}
+
+	tier := intended
+	area := w * h
+
+	if tier == 2 {
+		if area < 24 || w < 3 || h < 2 {
+			tier = 1
+		}
+	}
+	if tier == 1 {
+		if area < 7 || w < 3 || h < 1 {
+			tier = 0
+		}
+	}
+
+	return tier
 }

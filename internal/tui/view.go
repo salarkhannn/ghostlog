@@ -86,9 +86,9 @@ func (m Model) View() string {
 func (m Model) renderTopBar(w int) string {
 	session := fmtDuration(time.Since(m.sessionStart))
 	speed := accentStyle.Render(fmt.Sprintf("[AGENT SPEED: %.1f commits/min]", m.CPSMetric))
-	sess := fmt.Sprintf("SESSION: %s", session)
+	sess := barStyle.Render(fmt.Sprintf(" | SESSION: %s | ", session))
 	watching := dimStyle.Render("watching " + m.repoPath)
-	mid := fmt.Sprintf("%s | %s | %s", speed, sess, watching)
+	mid := lipgloss.JoinHorizontal(lipgloss.Top, speed, sess, watching)
 	return barStyle.Width(w).Render(mid)
 }
 
@@ -97,12 +97,12 @@ func (m Model) renderBottomBar(w int) string {
 	if m.AutoScroll {
 		scroll = "auto: on"
 	}
-	line := fmt.Sprintf(
-		"Total: %s %s | %d bursts | %s | [a]uto / [c]opy / [q]uit",
+	line := lipgloss.JoinHorizontal(lipgloss.Top,
+		barStyle.Render("Total: "),
 		addStyle.Render(fmt.Sprintf("+%d", m.totalAdded)),
+		barStyle.Render(" "),
 		subStyle.Render(fmt.Sprintf("-%d", m.totalRemoved)),
-		len(m.Bursts),
-		scroll,
+		barStyle.Render(fmt.Sprintf(" | %d bursts | %s | [a]uto / [c]opy / [q]uit", len(m.Bursts), scroll)),
 	)
 	return barStyle.Width(w).Render(line)
 }
@@ -141,16 +141,11 @@ func formatBurst(n int, b analyzer.Burst, w int) string {
 	added := addStyle.Render(fmt.Sprintf("+%d", b.LinesAdded))
 	removed := subStyle.Render(fmt.Sprintf("-%d", b.LinesRemoved))
 
-	return fmt.Sprintf("[#%d] %d commits in %s  %s %s %s (+%s) across %d files",
-		b.ID,
-		len(b.Hashes),
-		dur,
-		status,
-		added,
-		removed,
-		formatting.Bytes(b.BytesAdded),
-		b.FilesChanged,
-	)
+	prefix := dimStyle.Render(fmt.Sprintf("[#%d] %d commits in %s  ", b.ID, len(b.Hashes), dur))
+	suffix := dimStyle.Render(fmt.Sprintf(" (+%s) across %d files", formatting.Bytes(b.BytesAdded), b.FilesChanged))
+	space := dimStyle.Render(" ")
+
+	return lipgloss.JoinHorizontal(lipgloss.Top, prefix, status, space, added, space, removed, suffix)
 }
 
 func fmtDuration(d time.Duration) string {

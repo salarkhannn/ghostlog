@@ -211,11 +211,13 @@ func (m *Model) refreshViewport() {
 		return
 	}
 	if len(m.Bursts) == 0 {
-		m.vp.SetContent(dimStyle.Render("\n  Waiting for first commit..."))
+		content := dimStyle.Render("\n  Waiting for first commit...")
+		m.vp.SetContent(lipgloss.NewStyle().Background(BgColor).Width(m.vp.Width).Render(content))
 		return
 	}
 	if m.SelectedBurstIndex < 0 || m.SelectedBurstIndex >= len(m.Bursts) {
-		m.vp.SetContent(dimStyle.Render("\n  No burst selected."))
+		content := dimStyle.Render("\n  No burst selected.")
+		m.vp.SetContent(lipgloss.NewStyle().Background(BgColor).Width(m.vp.Width).Render(content))
 		return
 	}
 	diff, err := git.Show(m.repoPath, m.Bursts[m.SelectedBurstIndex].Hashes)

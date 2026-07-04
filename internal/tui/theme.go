@@ -20,6 +20,7 @@ var (
 			Padding(0, 1)
 
 	AccentStyle = lipgloss.NewStyle().
+			Background(BgColor).
 			Foreground(ActiveColor).
 			Bold(true)
 
@@ -29,17 +30,20 @@ var (
 			Bold(true)
 
 	DimStyle = lipgloss.NewStyle().
+			Background(BgColor).
 			Foreground(MutedColor)
 
 	OkStyle = lipgloss.NewStyle().
+			Background(BgColor).
 			Foreground(OkColor)
 
 	ConflictStyle = lipgloss.NewStyle().
+			Background(BgColor).
 			Foreground(WarnColor).
 			Bold(true)
 
-	AddStyle = lipgloss.NewStyle().Foreground(OkColor)
-	SubStyle = lipgloss.NewStyle().Foreground(SoftRedColor)
+	AddStyle = lipgloss.NewStyle().Background(BgColor).Foreground(OkColor)
+	SubStyle = lipgloss.NewStyle().Background(BgColor).Foreground(SoftRedColor)
 
 	LeftPaneStyle = lipgloss.NewStyle().
 			Background(BgColor).

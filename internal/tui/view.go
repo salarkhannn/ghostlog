@@ -133,7 +133,7 @@ func formatBurst(n int, b analyzer.Burst, w int) string {
 
 	status := okStyle.Render("[OK]")
 	if len(b.SecretLeaks) > 0 {
-		status = lipgloss.NewStyle().Foreground(FlashColor).Bold(true).Render("[WARN - secret-leak]")
+		status = lipgloss.NewStyle().Background(BgColor).Foreground(FlashColor).Bold(true).Render("[WARN - secret-leak]")
 	} else if b.HasConflict || (b.ComplexityAfter-b.ComplexityBefore) > 10 || len(b.UntestedFunctions) > 0 {
 		status = conflictStyle.Render("[WARN]")
 	}
@@ -196,7 +196,7 @@ func (m Model) renderTreemap(w, h int) string {
 	if m.CurrentDir != "" {
 		breadcrumb = "📁 " + strings.ReplaceAll(m.CurrentDir, "/", " > ")
 	}
-	breadcrumb = lipgloss.NewStyle().Foreground(accent).Bold(true).Render(breadcrumb)
+	breadcrumb = lipgloss.NewStyle().Background(BgColor).Foreground(accent).Bold(true).Render(breadcrumb)
 
 	controls := dimStyle.Render("[Tab/H/L] Navigate | [Enter] Zoom In | [Backspace] Zoom Out")
 

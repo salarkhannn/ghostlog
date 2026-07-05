@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.png" width="300" alt="Ghostlog Logo">
+  <img src="logo.png?v=2" width="300" alt="Ghostlog Logo">
 </p>
 
 # ghostlog

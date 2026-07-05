@@ -11,7 +11,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/viewport"
+	"github.com/salarkhannn/ghostlog/internal/tui/formatting"
 	tea "github.com/charmbracelet/bubbletea"
 
 	"github.com/salarkhannn/ghostlog/internal/analyzer"
@@ -43,12 +45,52 @@ type LayoutCache struct {
 	parentItems []*treemapItem
 }
 
+
+type burstItem struct {
+	burst analyzer.Burst
+	idx   int
+}
+
+func (i burstItem) Title() string {
+	if len(i.burst.Hashes) > 0 && i.burst.Hashes[0] == "UNCOMMITTED" {
+		return "[NOT COMMITTED] Uncommitted Changes"
+	}
+	dur := formatting.Duration(int64(i.burst.LastTime.Sub(i.burst.StartTime).Seconds()))
+	if dur == "0s" {
+		dur = "<1s"
+	}
+	return fmt.Sprintf("[#%d] %d commits in %s", i.burst.ID, len(i.burst.Hashes), dur)
+}
+
+func (i burstItem) Description() string {
+	status := "OK"
+	if len(i.burst.SecretLeaks) > 0 {
+		status = "WARN-leak"
+	} else if i.burst.HasConflict || (i.burst.ComplexityAfter-i.burst.ComplexityBefore) > 10 || len(i.burst.UntestedFunctions) > 0 {
+		status = "WARN"
+	}
+	return fmt.Sprintf("%s | +%d -%d (%s) files:%d", status, i.burst.LinesAdded, i.burst.LinesRemoved, formatting.Bytes(i.burst.BytesAdded), i.burst.FilesChanged)
+}
+
+func (i burstItem) FilterValue() string {
+	return fmt.Sprintf("#%d", i.burst.ID)
+}
+
+type sessionItem struct {
+	filename string
+}
+
+func (i sessionItem) Title() string       { return strings.TrimSuffix(i.filename, ".txt") }
+func (i sessionItem) Description() string { return "Ghostlog Session" }
+func (i sessionItem) FilterValue() string { return i.filename }
+
 type Model struct {
 	repoPath           string
 	commitCh           <-chan watcher.CommitMsg
 	az                 *analyzer.Analyzer
 	Bursts             []analyzer.Burst
-	SelectedBurstIndex int
+	burstList          list.Model
+	burstListReady     bool
 	AutoScroll         bool
 	ViewMode           string // "burst" or "treemap"
 	Treemap            []*TreemapCell
@@ -69,13 +111,18 @@ type Model struct {
 	SelectedTreemapIndex int
 	layoutCache          *LayoutCache
 	IconMode             IconMode
+	ActiveSessionID      string
+	ViewSessionID        string
+	sessionList          list.Model
+	FocusPane            string // "list" or "diff"
+	uncommittedBurst     *analyzer.Burst
 }
 
 func New(repoPath string, ch <-chan watcher.CommitMsg, iconMode IconMode) Model {
 	if iconMode == "" {
 		iconMode = IconModeNerdFont
 	}
-	return Model{
+	m := Model{
 		repoPath:       repoPath,
 		commitCh:       ch,
 		az:             analyzer.New(repoPath),
@@ -86,6 +133,28 @@ func New(repoPath string, ch <-chan watcher.CommitMsg, iconMode IconMode) Model 
 		lastTouchedMap: make(map[string]time.Time),
 		IconMode:       iconMode,
 	}
+	
+	delegate := list.NewDefaultDelegate()
+	delegate.Styles.SelectedTitle = delegate.Styles.SelectedTitle.Foreground(PrimaryColor).BorderLeftForeground(PrimaryColor)
+	delegate.Styles.SelectedDesc = delegate.Styles.SelectedDesc.Foreground(PrimaryColor).BorderLeftForeground(PrimaryColor)
+	
+	m.burstList = list.New([]list.Item{}, delegate, 0, 0)
+	m.burstList.Title = "Bursts"
+	m.burstList.Styles.Title = AccentStyle
+	m.burstList.SetShowStatusBar(false)
+	m.burstList.SetFilteringEnabled(true)
+	
+	m.ActiveSessionID = "session-" + time.Now().Format("20060102-150405")
+	m.ViewSessionID = m.ActiveSessionID
+	m.FocusPane = "list"
+	os.MkdirAll(filepath.Join(repoPath, ".ghostlog", "sessions"), 0755)
+
+	m.sessionList = list.New([]list.Item{}, delegate, 0, 0)
+	m.sessionList.Title = "Sessions"
+	m.sessionList.Styles.Title = AccentStyle
+	m.sessionList.SetShowStatusBar(false)
+	
+	return m
 }
 
 type treemapMsg []*TreemapCell
@@ -129,6 +198,15 @@ func tickCmd() tea.Cmd {
 	return tea.Tick(time.Second, func(t time.Time) tea.Msg { return tickMsg(t) })
 }
 
+type uncommittedMsg *git.CommitInfo
+
+func (m Model) checkUncommitted() tea.Cmd {
+	return func() tea.Msg {
+		info, _ := git.DiffUncommitted(m.repoPath)
+		return uncommittedMsg(info)
+	}
+}
+
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case treemapMsg:
@@ -147,16 +225,28 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
 		m.height = msg.Height
-		vpW, vpH := rightPaneDims(m.width, m.height)
+		
+		leftW := m.width * 70 / 100
+		rightW := m.width - leftW - 2
+		
+		contentH := m.height - 2 // Account for top/bottom bars
+		
 		if !m.vpReady {
-			os.Stdout.WriteString("\x1b[?7l") // Disable DECAWM safely after Alt Screen is entered
-			m.vp = viewport.New(vpW, vpH)
+			os.Stdout.WriteString("\x1b[?7l")
+			m.vp = viewport.New(rightW-2, contentH-2)
 			m.vp.Style = ViewportStyle
 			m.vpReady = true
 		} else {
-			m.vp.Width = vpW
-			m.vp.Height = vpH
+			m.vp.Width = rightW - 2
+			m.vp.Height = contentH - 2
 		}
+		
+		// burstList needs leftW-4 because LeftPaneStyle has Padding(0, 1) and Border
+		m.burstList.SetSize(leftW-4, contentH-2)
+		m.burstListReady = true
+		
+		m.sessionList.SetSize(leftW-4, contentH-2)
+
 		m.refreshViewport()
 		return m, nil
 
@@ -168,9 +258,41 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tickMsg:
 		m.CPSMetric = m.calcCPM()
-		return m, tickCmd()
+		return m, tea.Batch(tickCmd(), m.checkUncommitted())
+
+	case uncommittedMsg:
+		if msg != nil && len(msg.Diffs) > 0 {
+			b := analyzer.Burst{
+				ID:           len(m.Bursts) + 1,
+				Hashes:       []string{"UNCOMMITTED"},
+				StartTime:    time.Now(),
+				LastTime:     time.Now(),
+				FilesChanged: len(msg.Diffs),
+			}
+			for _, d := range msg.Diffs {
+				b.LinesAdded += d.LinesAdded
+				b.LinesRemoved += d.LinesRemoved
+				b.BytesAdded += d.Bytes
+				b.SecretLeaks = append(b.SecretLeaks, d.SecretLeaks...)
+			}
+			m.uncommittedBurst = &b
+		} else {
+			m.uncommittedBurst = nil
+		}
+		m.refreshBurstListItems()
+		return m, nil
 
 	case watcher.CommitMsg:
+		sessionPath := filepath.Join(m.repoPath, ".ghostlog", "sessions", m.ActiveSessionID+".txt")
+		if f, err := os.OpenFile(sessionPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644); err == nil {
+			f.WriteString(msg.Hash + "\n")
+			f.Close()
+		}
+
+		if m.ViewSessionID != m.ActiveSessionID {
+			return m, watcher.WaitForCommit(m.commitCh)
+		}
+
 		info, err := git.DiffTree(msg.RepoPath, msg.Hash)
 		if err != nil {
 			return m, watcher.WaitForCommit(m.commitCh)
@@ -192,8 +314,11 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					}
 				}
 			}
+			
+			m.refreshBurstListItems()
+			
 			if m.AutoScroll {
-				m.SelectedBurstIndex = len(m.Bursts) - 1
+				m.burstList.Select(len(m.Bursts) - 1)
 			}
 			m.refreshViewport()
 			return m, tea.Batch(
@@ -206,6 +331,18 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
+func (m *Model) refreshBurstListItems() {
+	var items []list.Item
+	for i, b := range m.Bursts {
+		items = append(items, burstItem{burst: b, idx: i})
+	}
+	if m.uncommittedBurst != nil {
+		items = append(items, burstItem{burst: *m.uncommittedBurst, idx: len(m.Bursts)})
+	}
+	m.burstList.SetItems(items)
+	m.refreshViewport()
+}
+
 func (m *Model) refreshViewport() {
 	if !m.vpReady {
 		return
@@ -215,19 +352,36 @@ func (m *Model) refreshViewport() {
 		m.vp.SetContent(ViewportStyle.Width(m.vp.Width).Render(content))
 		return
 	}
-	if m.SelectedBurstIndex < 0 || m.SelectedBurstIndex >= len(m.Bursts) {
+	idx := m.burstList.Index()
+	items := m.burstList.Items()
+	if idx < 0 || idx >= len(items) {
 		content := "\n" + dimStyle.Render("  No burst selected.")
 		m.vp.SetContent(ViewportStyle.Width(m.vp.Width).Render(content))
 		return
 	}
-	diff, err := git.Show(m.repoPath, m.Bursts[m.SelectedBurstIndex].Hashes)
-	if err != nil {
-		m.vp.SetContent("error: " + err.Error())
-		return
+	
+	oldY := m.vp.YOffset
+	
+	bi := items[idx].(burstItem)
+	if len(bi.burst.Hashes) > 0 && bi.burst.Hashes[0] == "UNCOMMITTED" {
+		diff, err := git.ShowUncommitted(m.repoPath)
+		if err != nil {
+			m.vp.SetContent("error: " + err.Error())
+		} else {
+			m.vp.SetContent(diff)
+		}
+	} else {
+		diff, err := git.Show(m.repoPath, bi.burst.Hashes)
+		if err != nil {
+			m.vp.SetContent("error: " + err.Error())
+			return
+		}
+		m.vp.SetContent(diff)
 	}
-	m.vp.SetContent(diff)
 	if m.AutoScroll {
 		m.vp.GotoBottom()
+	} else {
+		m.vp.SetYOffset(oldY)
 	}
 }
 
@@ -530,4 +684,45 @@ func (m Model) getAllGroupedItems() []*treemapItem {
 	})
 
 	return items
+}
+
+func (m *Model) loadSession(filename string) {
+	m.ViewSessionID = strings.TrimSuffix(filename, ".txt")
+	m.az = analyzer.New(m.repoPath)
+	m.Bursts = nil
+	m.totalAdded = 0
+	m.totalRemoved = 0
+	m.commitTimestamps = nil
+	m.lastTouchedMap = make(map[string]time.Time)
+	m.burstList.SetItems(nil)
+
+	b, err := os.ReadFile(filepath.Join(m.repoPath, ".ghostlog", "sessions", filename))
+	if err == nil {
+		lines := strings.Split(strings.TrimSpace(string(b)), "\n")
+		for _, hash := range lines {
+			if hash == "" {
+				continue
+			}
+			info, err := git.DiffTree(m.repoPath, hash)
+			if err == nil {
+				bursts, changed := m.az.Add(info)
+				if changed {
+					m.Bursts = bursts
+					m.commitTimestamps = append(m.commitTimestamps, time.Now())
+					for _, d := range info.Diffs {
+						m.totalAdded += d.LinesAdded
+						m.totalRemoved += d.LinesRemoved
+						m.lastTouchedMap[d.Path] = time.Now()
+						for _, cell := range m.Treemap {
+							if cell.Path == d.Path {
+								cell.LastTouched = time.Now()
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	m.refreshBurstListItems()
 }

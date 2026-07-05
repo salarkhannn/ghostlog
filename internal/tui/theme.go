@@ -10,79 +10,73 @@ func init() {
 }
 
 var (
-	BgColor         = lipgloss.Color("#0e0d0c")
-	FgColor         = lipgloss.Color("#e8e3dc")
-	MutedColor      = lipgloss.Color("#7a7168")
-	BorderColor     = lipgloss.Color("#26221d")
-	SelectedColor   = lipgloss.Color("#1e1a16")
-	ActiveColor     = lipgloss.Color("#c17a4f")
-	OkColor         = lipgloss.Color("#6f9c72")
-	WarnColor       = lipgloss.Color("#b8963f")
-	SoftRedColor    = lipgloss.Color("#b85c52")
-	FlashColor      = lipgloss.Color("#ff2d78") // Reserved ONLY for treemap flash and secret-leak warnings
+	PrimaryColor    = lipgloss.Color("#F25D94") // Neon Pink
+	SecondaryColor  = lipgloss.Color("#A550DF") // Soft Purple
+	AccentColor     = lipgloss.Color("#00F5D4") // Cyan
+	
+	FgColor         = lipgloss.Color("#FAFAFA")
+	MutedColor      = lipgloss.Color("#737373")
+	BorderColor     = lipgloss.Color("#383838")
+	SelectedColor   = lipgloss.Color("#2B2034") // Very dark purple for selection
+	OkColor         = lipgloss.Color("#00F5D4") // Cyan for additions/ok
+	WarnColor       = lipgloss.Color("#F8E16C")
+	SoftRedColor    = lipgloss.Color("#FF4C8B")
+	FlashColor      = lipgloss.Color("#FF0055")
 
 	BarStyle = lipgloss.NewStyle().
-			Background(BgColor).
 			Foreground(MutedColor).
 			Padding(0, 1)
 
 	AccentStyle = lipgloss.NewStyle().
-			Background(BgColor).
-			Foreground(ActiveColor).
+			Foreground(PrimaryColor).
 			Bold(true)
 
 	SelectedStyle = lipgloss.NewStyle().
 			Background(SelectedColor).
-			Foreground(FgColor).
-			Bold(true)
+			Foreground(PrimaryColor).
+			Bold(true).
+			BorderLeft(true).
+			BorderStyle(lipgloss.NormalBorder()).
+			BorderForeground(PrimaryColor)
 
 	DimStyle = lipgloss.NewStyle().
-			Background(BgColor).
 			Foreground(MutedColor)
 
 	InlineStyle = lipgloss.NewStyle().
-			Background(BgColor).
 			Foreground(MutedColor)
 
 	OkStyle = lipgloss.NewStyle().
-			Background(BgColor).
 			Foreground(OkColor)
 
 	ConflictStyle = lipgloss.NewStyle().
-			Background(BgColor).
 			Foreground(WarnColor).
 			Bold(true)
 
-	AddStyle = lipgloss.NewStyle().Background(BgColor).Foreground(OkColor)
-	SubStyle = lipgloss.NewStyle().Background(BgColor).Foreground(SoftRedColor)
+	AddStyle = lipgloss.NewStyle().Foreground(OkColor)
+	SubStyle = lipgloss.NewStyle().Foreground(SoftRedColor)
 
 	LeftPaneStyle = lipgloss.NewStyle().
-			Background(BgColor).
+			Border(lipgloss.RoundedBorder()).
+			BorderForeground(SecondaryColor).
 			Padding(0, 1)
 
 	RightPaneStyle = lipgloss.NewStyle().
-			Border(lipgloss.NormalBorder()).
-			BorderForeground(BorderColor).
-			BorderBackground(BgColor).
-			Background(BgColor)
+			Border(lipgloss.RoundedBorder()).
+			BorderForeground(BorderColor)
 
-	ViewportStyle = lipgloss.NewStyle().
-			Background(BgColor)
+	ViewportStyle = lipgloss.NewStyle()
 
-	RootStyle = lipgloss.NewStyle().
-			Background(BgColor)
+	RootStyle = lipgloss.NewStyle()
 
 	WarnStyle = lipgloss.NewStyle().
-			Background(BgColor).
 			Foreground(FlashColor).
 			Bold(true)
 
 	BreadcrumbStyle = lipgloss.NewStyle().
-			Background(BgColor).
-			Foreground(ActiveColor).
+			Foreground(AccentColor).
 			Bold(true)
 
 	TreemapBaseColors = []string{
-		"#3b332b", "#2e2720", "#473c33", "#251e18", "#352c24",
+		"#2B2034", "#3D2B4A", "#4F3660", "#614176", "#734C8C",
 	}
 )

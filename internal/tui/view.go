@@ -8,8 +8,6 @@ import (
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/mattn/go-runewidth"
-	"github.com/salarkhannn/ghostlog/internal/analyzer"
-	"github.com/salarkhannn/ghostlog/internal/tui/formatting"
 )
 
 type cell struct {
@@ -19,8 +17,7 @@ type cell struct {
 }
 
 var (
-	bg       = BgColor
-	accent   = ActiveColor
+	accent   = AccentColor
 	muted    = MutedColor
 	text     = FgColor
 	selected = SelectedColor
@@ -48,7 +45,7 @@ var (
 func (m Model) View() string {
 	width := m.width
 
-	if !m.vpReady {
+	if !m.vpReady || !m.burstListReady {
 		return barStyle.Width(width).Render("ghostlog: waiting for terminal size...")
 	}
 
@@ -57,41 +54,52 @@ func (m Model) View() string {
 
 	contentH := m.height - lipgloss.Height(top) - lipgloss.Height(bot)
 	leftW := width * 70 / 100
-	rightW := width - leftW
+	rightW := width - leftW - 2
+
+	var leftStyle lipgloss.Style
+	var rightStyle lipgloss.Style
+	if m.FocusPane == "diff" {
+		leftStyle = LeftPaneStyle.BorderForeground(BorderColor)
+		rightStyle = paneStyle.BorderForeground(PrimaryColor)
+	} else {
+		leftStyle = LeftPaneStyle.BorderForeground(PrimaryColor)
+		rightStyle = paneStyle.BorderForeground(BorderColor)
+	}
 
 	var left string
 	if m.ViewMode == "treemap" {
-		left = LeftPaneStyle.
-			Width(leftW).
-			Height(contentH).
-			Render(m.renderTreemap(leftW-2, contentH))
+		left = leftStyle.Render(m.renderTreemap(leftW-4, contentH-2))
+	} else if m.ViewMode == "sessions" {
+		left = leftStyle.Width(leftW - 4).Render(m.sessionList.View())
 	} else {
-		left = LeftPaneStyle.
-			Width(leftW).
-			Height(contentH).
-			Render(m.renderBurstList(leftW - 2))
+		left = leftStyle.Width(leftW - 4).Render(m.burstList.View())
 	}
 
-	right := paneStyle.
-		Width(rightW - 2).
-		Height(contentH - 2).
-		Render(m.vp.View())
+	right := rightStyle.Width(rightW - 2).Render(m.vp.View())
 
 	body := lipgloss.JoinHorizontal(lipgloss.Top, left, right)
 	
 	finalOutput := lipgloss.JoinVertical(lipgloss.Left, top, body, bot)
 	
-	// No DECAWM hacks needed! We solve this via phantom characters (\uE000)
 	return rootStyle.Render(finalOutput)
 }
 
 func (m Model) renderTopBar(w int) string {
 	session := fmtDuration(time.Since(m.sessionStart))
-	speed := accentStyle.Render(fmt.Sprintf("[AGENT SPEED: %.1f commits/min]", m.CPSMetric))
-	sess := inlineStyle.Render(fmt.Sprintf(" | SESSION: %s | ", session))
-	watching := dimStyle.Render("watching " + m.repoPath)
+	speedStr := fmt.Sprintf("[AGENT SPEED: %.1f commits/min]", m.CPSMetric)
+	speed := accentStyle.Render(speedStr)
+	sessStr := fmt.Sprintf(" | SESSION: %s | ", session)
+	sess := inlineStyle.Render(sessStr)
+	
+	repo := strings.TrimSpace(m.repoPath)
+	maxRepoLen := w - runewidth.StringWidth(speedStr) - runewidth.StringWidth(sessStr) - 10
+	if maxRepoLen > 5 && runewidth.StringWidth(repo) > maxRepoLen {
+		repo = runewidth.Truncate(repo, maxRepoLen, "...")
+	}
+	
+	watching := dimStyle.Render("watching " + repo)
 	mid := lipgloss.JoinHorizontal(lipgloss.Top, speed, sess, watching)
-	return barStyle.Width(w).Render(mid)
+	return barStyle.MaxWidth(w).Render(mid)
 }
 
 func (m Model) renderBottomBar(w int) string {
@@ -104,51 +112,13 @@ func (m Model) renderBottomBar(w int) string {
 		addStyle.Render(fmt.Sprintf("+%d", m.totalAdded)),
 		inlineStyle.Render(" "),
 		subStyle.Render(fmt.Sprintf("-%d", m.totalRemoved)),
-		inlineStyle.Render(fmt.Sprintf(" | %d bursts | %s | [a]uto / [c]opy / [q]uit", len(m.Bursts), scroll)),
+		inlineStyle.Render(fmt.Sprintf(" | %d bursts | %s | [tab] focus | [a]uto / [c]opy / [s]essions / [q]uit", len(m.Bursts), scroll)),
 	)
-	return barStyle.Width(w).Render(line)
+	return barStyle.MaxWidth(w).Render(line)
 }
 
-func (m Model) renderBurstList(w int) string {
-	if len(m.Bursts) == 0 {
-		return "\n" + dimStyle.Render("  Waiting for commits...") + "\n\n" + dimStyle.Render("  Start your AI agent.") + "\n" + dimStyle.Render("  ghostlog captures every commit.")
-	}
 
-	var sb strings.Builder
-	for i, b := range m.Bursts {
-		line := formatBurst(i+1, b, w-3)
-		if i == m.SelectedBurstIndex {
-			sb.WriteString(selectedStyle.Render("> " + line))
-		} else {
-			sb.WriteString(dimStyle.Render("  " + line))
-		}
-		sb.WriteByte('\n')
-	}
-	return sb.String()
-}
 
-func formatBurst(n int, b analyzer.Burst, w int) string {
-	dur := formatting.Duration(int64(b.LastTime.Sub(b.StartTime).Seconds()))
-	if dur == "0s" {
-		dur = "<1s"
-	}
-
-	status := okStyle.Render("[OK]")
-	if len(b.SecretLeaks) > 0 {
-		status = warnStyle.Render("[WARN - secret-leak]")
-	} else if b.HasConflict || (b.ComplexityAfter-b.ComplexityBefore) > 10 || len(b.UntestedFunctions) > 0 {
-		status = conflictStyle.Render("[WARN]")
-	}
-
-	added := addStyle.Render(fmt.Sprintf("+%d", b.LinesAdded))
-	removed := subStyle.Render(fmt.Sprintf("-%d", b.LinesRemoved))
-
-	prefix := dimStyle.Render(fmt.Sprintf("[#%d] %d commits in %s  ", b.ID, len(b.Hashes), dur))
-	suffix := dimStyle.Render(fmt.Sprintf(" (+%s) across %d files", formatting.Bytes(b.BytesAdded), b.FilesChanged))
-	space := dimStyle.Render(" ")
-
-	return lipgloss.JoinHorizontal(lipgloss.Top, prefix, status, space, added, space, removed, suffix)
-}
 
 func fmtDuration(d time.Duration) string {
 	d = d.Round(time.Second)
@@ -189,13 +159,16 @@ func (m Model) renderTreemap(w, h int) string {
 		selIdx = 0
 	}
 
-	breadcrumb := "📁 [root]"
+	breadcrumbStr := "📁 [root]"
 	if m.CurrentDir != "" {
-		breadcrumb = "📁 " + strings.ReplaceAll(m.CurrentDir, "/", " > ")
+		breadcrumbStr = "📁 " + strings.ReplaceAll(m.CurrentDir, "/", " > ")
 	}
-	breadcrumb = breadcrumbStyle.Render(breadcrumb)
+	breadcrumbStr = runewidth.Truncate(breadcrumbStr, w, "...")
+	breadcrumb := breadcrumbStyle.Render(breadcrumbStr)
 
-	controls := dimStyle.Render("[Tab/H/L] Navigate | [Enter] Zoom In | [Backspace] Zoom Out")
+	controlsStr := "[Tab/H/L] Nav | [Enter] In | [Bksp] Out"
+	controlsStr = runewidth.Truncate(controlsStr, w, "")
+	controls := dimStyle.Render(controlsStr)
 
 	grid := make([][]cell, gridH)
 	for i := range grid {
@@ -223,9 +196,9 @@ func (m Model) renderTreemap(w, h int) string {
 
 		var borderStyle lipgloss.Style
 		if isSel {
-			borderStyle = lipgloss.NewStyle().Background(BgColor).Foreground(ActiveColor).Bold(true)
+			borderStyle = lipgloss.NewStyle().Foreground(PrimaryColor).Bold(true)
 		} else {
-			borderStyle = lipgloss.NewStyle().Background(BgColor).Foreground(color)
+			borderStyle = lipgloss.NewStyle().Foreground(color)
 		}
 
 		hasBorder := isSel || (box.IsDir && box.W >= 3 && box.H >= 3)

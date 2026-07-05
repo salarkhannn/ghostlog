@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 )
 
@@ -78,6 +79,30 @@ func findSpatialNeighbor(m Model, currentIdx int, dir string) int {
 }
 
 func handleMouse(m Model, msg tea.MouseMsg) (Model, tea.Cmd) {
+	if m.ViewMode == "burst" {
+		var cmd tea.Cmd
+		var listCmd tea.Cmd
+		
+		leftW := m.width * 70 / 100
+		if msg.X < leftW {
+			oldIdx := m.burstList.Index()
+			m.burstList, listCmd = m.burstList.Update(msg)
+			if m.burstList.Index() != oldIdx {
+				m.AutoScroll = false
+				m.vp.GotoTop()
+				m.refreshViewport()
+			}
+		} else {
+			oldY := m.vp.YOffset
+			m.vp, cmd = m.vp.Update(msg)
+			if m.vp.YOffset < oldY {
+				m.AutoScroll = false
+			}
+		}
+		
+		return m, tea.Batch(cmd, listCmd)
+	}
+
 	if m.ViewMode != "treemap" {
 		return m, nil
 	}
@@ -140,20 +165,73 @@ func handleMouse(m Model, msg tea.MouseMsg) (Model, tea.Cmd) {
 }
 
 func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
+	if msg.Type == tea.KeyTab {
+		if m.FocusPane == "list" {
+			m.FocusPane = "diff"
+		} else {
+			m.FocusPane = "list"
+		}
+		return m, nil
+	}
+
+	switch msg.String() {
+	case "q", "ctrl+c":
+		return m, tea.Quit
+	case "v":
+		if m.ViewMode == "treemap" {
+			m.ViewMode = "burst"
+		} else {
+			m.ViewMode = "treemap"
+		}
+		return m, nil
+	case "s":
+		if m.ViewMode != "sessions" {
+			m.ViewMode = "sessions"
+			files, _ := filepath.Glob(filepath.Join(m.repoPath, ".ghostlog", "sessions", "*.txt"))
+			var items []list.Item
+			for _, f := range files {
+				items = append(items, sessionItem{filepath.Base(f)})
+			}
+			m.sessionList.SetItems(items)
+			return m, nil
+		}
+	}
+
+	if m.FocusPane == "diff" && m.ViewMode != "sessions" {
+		oldY := m.vp.YOffset
+		var cmd tea.Cmd
+		m.vp, cmd = m.vp.Update(msg)
+		if m.vp.YOffset < oldY {
+			m.AutoScroll = false
+		}
+		return m, cmd
+	}
+
+	if m.ViewMode == "sessions" {
+		switch msg.Type {
+		case tea.KeyEsc:
+			m.ViewMode = "burst"
+			return m, nil
+		case tea.KeyEnter:
+			idx := m.sessionList.Index()
+			items := m.sessionList.Items()
+			if idx >= 0 && idx < len(items) {
+				selected := items[idx].(sessionItem).filename
+				m.loadSession(selected)
+				m.ViewMode = "burst"
+			}
+			return m, nil
+		}
+		var cmd tea.Cmd
+		m.sessionList, cmd = m.sessionList.Update(msg)
+		return m, cmd
+	}
+
 	if m.ViewMode == "treemap" {
 		w, h := m.TreemapDims()
 		items, _ := m.getLayout(w, h)
 
 		switch msg.Type {
-		case tea.KeyCtrlC:
-			return m, tea.Quit
-
-		case tea.KeyTab:
-			if len(items) > 0 {
-				m.SelectedTreemapIndex = (m.SelectedTreemapIndex + 1) % len(items)
-			}
-			return m, nil
-
 		case tea.KeyEnter:
 			if len(items) > 0 && m.SelectedTreemapIndex >= 0 && m.SelectedTreemapIndex < len(items) {
 				sel := items[m.SelectedTreemapIndex]
@@ -163,7 +241,6 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 				}
 			}
 			return m, nil
-
 		case tea.KeyBackspace:
 			if m.CurrentDir != "" {
 				parent := filepath.Dir(m.CurrentDir)
@@ -172,8 +249,6 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 				}
 				oldDir := m.CurrentDir
 				m.CurrentDir = parent
-
-				w, h := m.TreemapDims()
 				parentItems, _ := m.layoutTreemap(w, h)
 				m.SelectedTreemapIndex = 0
 				for idx, pi := range parentItems {
@@ -184,38 +259,34 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 				}
 			}
 			return m, nil
-
 		case tea.KeyLeft:
 			m.SelectedTreemapIndex = findSpatialNeighbor(m, m.SelectedTreemapIndex, "left")
 			return m, nil
-
 		case tea.KeyRight:
 			m.SelectedTreemapIndex = findSpatialNeighbor(m, m.SelectedTreemapIndex, "right")
 			return m, nil
-
 		case tea.KeyUp:
 			m.SelectedTreemapIndex = findSpatialNeighbor(m, m.SelectedTreemapIndex, "up")
 			return m, nil
-
 		case tea.KeyDown:
 			m.SelectedTreemapIndex = findSpatialNeighbor(m, m.SelectedTreemapIndex, "down")
 			return m, nil
 		}
 
-		// Handle key runes/strings fallback
 		switch msg.String() {
-		case "q":
-			return m, tea.Quit
-		case "v":
-			m.ViewMode = "burst"
-			return m, nil
 		case "j", "down":
 			m.SelectedTreemapIndex = findSpatialNeighbor(m, m.SelectedTreemapIndex, "down")
 			return m, nil
 		case "k", "up":
 			m.SelectedTreemapIndex = findSpatialNeighbor(m, m.SelectedTreemapIndex, "up")
 			return m, nil
-		case "l": // Zoom in
+		case "a", "left":
+			m.SelectedTreemapIndex = findSpatialNeighbor(m, m.SelectedTreemapIndex, "left")
+			return m, nil
+		case "d", "right":
+			m.SelectedTreemapIndex = findSpatialNeighbor(m, m.SelectedTreemapIndex, "right")
+			return m, nil
+		case "l":
 			if len(items) > 0 && m.SelectedTreemapIndex >= 0 && m.SelectedTreemapIndex < len(items) {
 				sel := items[m.SelectedTreemapIndex]
 				if sel.isDir {
@@ -224,7 +295,7 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 				}
 			}
 			return m, nil
-		case "h": // Zoom out
+		case "h":
 			if m.CurrentDir != "" {
 				parent := filepath.Dir(m.CurrentDir)
 				if parent == "." || parent == "/" || parent == m.CurrentDir {
@@ -232,8 +303,6 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 				}
 				oldDir := m.CurrentDir
 				m.CurrentDir = parent
-
-				w, h := m.TreemapDims()
 				parentItems, _ := m.layoutTreemap(w, h)
 				m.SelectedTreemapIndex = 0
 				for idx, pi := range parentItems {
@@ -243,12 +312,6 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 					}
 				}
 			}
-			return m, nil
-		case "a", "left":
-			m.SelectedTreemapIndex = findSpatialNeighbor(m, m.SelectedTreemapIndex, "left")
-			return m, nil
-		case "d", "right":
-			m.SelectedTreemapIndex = findSpatialNeighbor(m, m.SelectedTreemapIndex, "right")
 			return m, nil
 		case "enter", "\n", "\r":
 			if len(items) > 0 && m.SelectedTreemapIndex >= 0 && m.SelectedTreemapIndex < len(items) {
@@ -267,8 +330,6 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 				}
 				oldDir := m.CurrentDir
 				m.CurrentDir = parent
-
-				w, h := m.TreemapDims()
 				parentItems, _ := m.layoutTreemap(w, h)
 				m.SelectedTreemapIndex = 0
 				for idx, pi := range parentItems {
@@ -280,56 +341,34 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 			}
 			return m, nil
 		}
-
 		return m, nil
 	}
 
 	switch msg.String() {
-	case "q", "ctrl+c":
-		return m, tea.Quit
-
-	case "j", "down":
-		if m.SelectedBurstIndex < len(m.Bursts)-1 {
-			m.SelectedBurstIndex++
-			m.AutoScroll = false
-			m.vp.GotoTop()
-			m.refreshViewport()
-		}
-
-	case "k", "up":
-		if m.SelectedBurstIndex > 0 {
-			m.SelectedBurstIndex--
-			m.AutoScroll = false
-			m.vp.GotoTop()
-			m.refreshViewport()
-		}
-
 	case "a":
 		m.AutoScroll = !m.AutoScroll
 		if m.AutoScroll && len(m.Bursts) > 0 {
-			m.SelectedBurstIndex = len(m.Bursts) - 1
+			m.burstList.Select(len(m.Bursts) - 1)
 			m.refreshViewport()
 		}
-
+		return m, nil
 	case "c":
-		if m.SelectedBurstIndex >= 0 && m.SelectedBurstIndex < len(m.Bursts) {
-			copyToClipboard(strings.Join(m.Bursts[m.SelectedBurstIndex].Hashes, " "))
+		idx := m.burstList.Index()
+		if idx >= 0 && idx < len(m.Bursts) {
+			copyToClipboard(strings.Join(m.Bursts[idx].Hashes, " "))
 		}
-
-	case "v":
-		if m.ViewMode == "treemap" {
-			m.ViewMode = "burst"
-		} else {
-			m.ViewMode = "treemap"
-		}
-
-	default:
-		var cmd tea.Cmd
-		m.vp, cmd = m.vp.Update(msg)
-		return m, cmd
+		return m, nil
 	}
 
-	return m, nil
+	var listCmd tea.Cmd
+	oldIdx := m.burstList.Index()
+	m.burstList, listCmd = m.burstList.Update(msg)
+	if m.burstList.Index() != oldIdx {
+		m.AutoScroll = false
+		m.vp.GotoTop()
+		m.refreshViewport()
+	}
+	return m, listCmd
 }
 
 func copyToClipboard(s string) {

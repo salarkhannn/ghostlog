@@ -61,6 +61,31 @@ func ShowFile(repoPath, hash, path string) ([]byte, error) {
 	return out, nil
 }
 
+func DiffUncommitted(repoPath string) (*CommitInfo, error) {
+	out, err := exec.Command("git", "-C", repoPath, "diff", "HEAD").Output()
+	if err != nil {
+		out, err = exec.Command("git", "-C", repoPath, "diff").Output()
+		if err != nil {
+			return nil, err
+		}
+	}
+	if len(out) == 0 {
+		return nil, nil
+	}
+	return &CommitInfo{Hash: "UNCOMMITTED", Short: "UNCOMMITTED", Diffs: parseDiff(out)}, nil
+}
+
+func ShowUncommitted(repoPath string) (string, error) {
+	out, err := exec.Command("git", "-C", repoPath, "diff", "HEAD", "--color=always", "--stat", "--patch").Output()
+	if err != nil {
+		out, err = exec.Command("git", "-C", repoPath, "diff", "--color=always", "--stat", "--patch").Output()
+		if err != nil {
+			return "", err
+		}
+	}
+	return string(out), nil
+}
+
 func ListFiles(repoPath, hash, dir string) ([]string, error) {
 	if dir == "." {
 		dir = ""

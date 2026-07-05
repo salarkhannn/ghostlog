@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.png" width="300" alt="Ghostlog Logo">
+</p>
+
 # ghostlog
 
 A live Terminal UI that watches a Git repository and captures every commit an AI coding agent makes — in real-time.

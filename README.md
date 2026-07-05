@@ -8,7 +8,7 @@
 
 A live Terminal UI that watches a Git repository and captures every commit an AI coding agent makes — in real-time.
 
-https://github.com/salarkhannn/ghostlog/raw/main/demo.mp4
+https://github.com/user-attachments/assets/cd16d219-fc22-458a-ab2e-48abf6f935cf
 
 ## Installation
 

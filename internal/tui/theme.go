@@ -1,6 +1,13 @@
 package tui
 
-import "github.com/charmbracelet/lipgloss"
+import (
+	"github.com/charmbracelet/lipgloss"
+	"github.com/muesli/termenv"
+)
+
+func init() {
+	lipgloss.SetColorProfile(termenv.TrueColor)
+}
 
 var (
 	BgColor         = lipgloss.Color("#0e0d0c")
@@ -33,6 +40,10 @@ var (
 			Background(BgColor).
 			Foreground(MutedColor)
 
+	InlineStyle = lipgloss.NewStyle().
+			Background(BgColor).
+			Foreground(MutedColor)
+
 	OkStyle = lipgloss.NewStyle().
 			Background(BgColor).
 			Foreground(OkColor)
@@ -54,6 +65,22 @@ var (
 			BorderForeground(BorderColor).
 			BorderBackground(BgColor).
 			Background(BgColor)
+
+	ViewportStyle = lipgloss.NewStyle().
+			Background(BgColor)
+
+	RootStyle = lipgloss.NewStyle().
+			Background(BgColor)
+
+	WarnStyle = lipgloss.NewStyle().
+			Background(BgColor).
+			Foreground(FlashColor).
+			Bold(true)
+
+	BreadcrumbStyle = lipgloss.NewStyle().
+			Background(BgColor).
+			Foreground(ActiveColor).
+			Bold(true)
 
 	TreemapBaseColors = []string{
 		"#3b332b", "#2e2720", "#473c33", "#251e18", "#352c24",

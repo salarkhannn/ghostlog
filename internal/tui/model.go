@@ -13,7 +13,7 @@ import (
 
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
+
 	"github.com/salarkhannn/ghostlog/internal/analyzer"
 	"github.com/salarkhannn/ghostlog/internal/git"
 	"github.com/salarkhannn/ghostlog/internal/watcher"
@@ -151,7 +151,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if !m.vpReady {
 			os.Stdout.WriteString("\x1b[?7l") // Disable DECAWM safely after Alt Screen is entered
 			m.vp = viewport.New(vpW, vpH)
-			m.vp.Style = lipgloss.NewStyle().Background(BgColor)
+			m.vp.Style = ViewportStyle
 			m.vpReady = true
 		} else {
 			m.vp.Width = vpW
@@ -211,13 +211,13 @@ func (m *Model) refreshViewport() {
 		return
 	}
 	if len(m.Bursts) == 0 {
-		content := dimStyle.Render("\n  Waiting for first commit...")
-		m.vp.SetContent(lipgloss.NewStyle().Background(BgColor).Width(m.vp.Width).Render(content))
+		content := "\n" + dimStyle.Render("  Waiting for first commit...")
+		m.vp.SetContent(ViewportStyle.Width(m.vp.Width).Render(content))
 		return
 	}
 	if m.SelectedBurstIndex < 0 || m.SelectedBurstIndex >= len(m.Bursts) {
-		content := dimStyle.Render("\n  No burst selected.")
-		m.vp.SetContent(lipgloss.NewStyle().Background(BgColor).Width(m.vp.Width).Render(content))
+		content := "\n" + dimStyle.Render("  No burst selected.")
+		m.vp.SetContent(ViewportStyle.Width(m.vp.Width).Render(content))
 		return
 	}
 	diff, err := git.Show(m.repoPath, m.Bursts[m.SelectedBurstIndex].Hashes)

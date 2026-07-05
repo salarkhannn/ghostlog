@@ -37,8 +37,12 @@ var (
 	conflictStyle = ConflictStyle
 	addStyle      = AddStyle
 	subStyle      = SubStyle
+	inlineStyle   = InlineStyle
 
-	paneStyle     = RightPaneStyle
+	paneStyle       = RightPaneStyle
+	rootStyle       = RootStyle
+	warnStyle       = WarnStyle
+	breadcrumbStyle = BreadcrumbStyle
 )
 
 func (m Model) View() string {
@@ -77,8 +81,6 @@ func (m Model) View() string {
 	
 	finalOutput := lipgloss.JoinVertical(lipgloss.Left, top, body, bot)
 	
-	rootStyle := lipgloss.NewStyle().Background(bg)
-	
 	// No DECAWM hacks needed! We solve this via phantom characters (\uE000)
 	return rootStyle.Render(finalOutput)
 }
@@ -86,7 +88,7 @@ func (m Model) View() string {
 func (m Model) renderTopBar(w int) string {
 	session := fmtDuration(time.Since(m.sessionStart))
 	speed := accentStyle.Render(fmt.Sprintf("[AGENT SPEED: %.1f commits/min]", m.CPSMetric))
-	sess := barStyle.Render(fmt.Sprintf(" | SESSION: %s | ", session))
+	sess := inlineStyle.Render(fmt.Sprintf(" | SESSION: %s | ", session))
 	watching := dimStyle.Render("watching " + m.repoPath)
 	mid := lipgloss.JoinHorizontal(lipgloss.Top, speed, sess, watching)
 	return barStyle.Width(w).Render(mid)
@@ -98,18 +100,18 @@ func (m Model) renderBottomBar(w int) string {
 		scroll = "auto: on"
 	}
 	line := lipgloss.JoinHorizontal(lipgloss.Top,
-		barStyle.Render("Total: "),
+		inlineStyle.Render("Total: "),
 		addStyle.Render(fmt.Sprintf("+%d", m.totalAdded)),
-		barStyle.Render(" "),
+		inlineStyle.Render(" "),
 		subStyle.Render(fmt.Sprintf("-%d", m.totalRemoved)),
-		barStyle.Render(fmt.Sprintf(" | %d bursts | %s | [a]uto / [c]opy / [q]uit", len(m.Bursts), scroll)),
+		inlineStyle.Render(fmt.Sprintf(" | %d bursts | %s | [a]uto / [c]opy / [q]uit", len(m.Bursts), scroll)),
 	)
 	return barStyle.Width(w).Render(line)
 }
 
 func (m Model) renderBurstList(w int) string {
 	if len(m.Bursts) == 0 {
-		return dimStyle.Render("\n  Waiting for commits...\n\n  Start your AI agent.\n  ghostlog captures every commit.")
+		return "\n" + dimStyle.Render("  Waiting for commits...") + "\n\n" + dimStyle.Render("  Start your AI agent.") + "\n" + dimStyle.Render("  ghostlog captures every commit.")
 	}
 
 	var sb strings.Builder
@@ -133,7 +135,7 @@ func formatBurst(n int, b analyzer.Burst, w int) string {
 
 	status := okStyle.Render("[OK]")
 	if len(b.SecretLeaks) > 0 {
-		status = lipgloss.NewStyle().Background(BgColor).Foreground(FlashColor).Bold(true).Render("[WARN - secret-leak]")
+		status = warnStyle.Render("[WARN - secret-leak]")
 	} else if b.HasConflict || (b.ComplexityAfter-b.ComplexityBefore) > 10 || len(b.UntestedFunctions) > 0 {
 		status = conflictStyle.Render("[WARN]")
 	}
@@ -191,7 +193,7 @@ func (m Model) renderTreemap(w, h int) string {
 	if m.CurrentDir != "" {
 		breadcrumb = "📁 " + strings.ReplaceAll(m.CurrentDir, "/", " > ")
 	}
-	breadcrumb = lipgloss.NewStyle().Background(BgColor).Foreground(accent).Bold(true).Render(breadcrumb)
+	breadcrumb = breadcrumbStyle.Render(breadcrumb)
 
 	controls := dimStyle.Render("[Tab/H/L] Navigate | [Enter] Zoom In | [Backspace] Zoom Out")
 
@@ -221,9 +223,9 @@ func (m Model) renderTreemap(w, h int) string {
 
 		var borderStyle lipgloss.Style
 		if isSel {
-			borderStyle = lipgloss.NewStyle().Foreground(ActiveColor).Bold(true)
+			borderStyle = lipgloss.NewStyle().Background(BgColor).Foreground(ActiveColor).Bold(true)
 		} else {
-			borderStyle = lipgloss.NewStyle().Foreground(color)
+			borderStyle = lipgloss.NewStyle().Background(BgColor).Foreground(color)
 		}
 
 		hasBorder := isSel || (box.IsDir && box.W >= 3 && box.H >= 3)
@@ -428,7 +430,7 @@ func (m Model) renderTreemap(w, h int) string {
 	sb.WriteString(breadcrumb)
 	sb.WriteRune('\n')
 
-	defaultGridStyle := lipgloss.NewStyle().Background(bg)
+	defaultGridStyle := rootStyle
 
 	for _, row := range grid {
 		var currentStyle *lipgloss.Style

@@ -19,6 +19,14 @@ Total: +534 -47 | 3 bursts | auto: on | [a]uto / [c]opy / [q]uit
 
 ## Installation
 
+### Precompiled Binaries (macOS, Linux, Windows)
+
+Download the latest precompiled binaries from the [GitHub Releases](https://github.com/salarkhannn/ghostlog/releases) page. Extract the archive and place the `ghostlog` executable in your system `$PATH`.
+
+### Install via Go
+
+If you have Go 1.23+ installed, you can build and install it globally:
+
 ```sh
 go install github.com/salarkhannn/ghostlog@latest
 ```

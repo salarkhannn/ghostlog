@@ -116,6 +116,9 @@ type Model struct {
 	sessionList          list.Model
 	FocusPane            string // "list" or "diff"
 	uncommittedBurst     *analyzer.Burst
+
+	quitting bool
+	quitTime time.Time
 }
 
 func New(repoPath string, ch <-chan watcher.CommitMsg, iconMode IconMode) Model {
@@ -180,12 +183,14 @@ func (m Model) loadTreemap() tea.Cmd {
 				continue
 			}
 			path := string(l)
-			wc, err := exec.Command("wc", "-l", filepath.Join(m.repoPath, path)).Output()
+			b, err := os.ReadFile(filepath.Join(m.repoPath, path))
 			if err != nil {
 				continue
 			}
-			var count int
-			fmt.Sscanf(string(wc), "%d", &count)
+			count := bytes.Count(b, []byte{'\n'})
+			if len(b) > 0 && !bytes.HasSuffix(b, []byte{'\n'}) {
+				count++
+			}
 			if count > 0 {
 				cells = append(cells, &TreemapCell{Path: path, Lines: count})
 			}
@@ -258,6 +263,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tickMsg:
 		m.CPSMetric = m.calcCPM()
+		if m.quitting && time.Since(m.quitTime) > 3*time.Second {
+			m.quitting = false
+		}
 		return m, tea.Batch(tickCmd(), m.checkUncommitted())
 
 	case uncommittedMsg:

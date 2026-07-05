@@ -107,12 +107,19 @@ func (m Model) renderBottomBar(w int) string {
 	if m.AutoScroll {
 		scroll = "auto: on"
 	}
+	
+	quitMsg := "[q]uit"
+	if m.quitting {
+		quitMsg = warnStyle.Render("Press q again to quit")
+	}
+
 	line := lipgloss.JoinHorizontal(lipgloss.Top,
 		inlineStyle.Render("Total: "),
 		addStyle.Render(fmt.Sprintf("+%d", m.totalAdded)),
 		inlineStyle.Render(" "),
 		subStyle.Render(fmt.Sprintf("-%d", m.totalRemoved)),
-		inlineStyle.Render(fmt.Sprintf(" | %d bursts | %s | [tab] focus | [a]uto / [c]opy / [s]essions / [q]uit", len(m.Bursts), scroll)),
+		inlineStyle.Render(fmt.Sprintf(" | %d bursts | %s | [tab] focus | [p/n] nav | [a]uto / [c]opy / [s]essions / ", len(m.Bursts), scroll)),
+		inlineStyle.Render(quitMsg),
 	)
 	return barStyle.MaxWidth(w).Render(line)
 }

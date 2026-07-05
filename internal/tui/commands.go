@@ -2,10 +2,11 @@ package tui
 
 import (
 	"math"
-	"os/exec"
 	"path/filepath"
 	"strings"
+	"time"
 
+	"github.com/atotto/clipboard"
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 )
@@ -176,13 +177,30 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 
 	switch msg.String() {
 	case "q", "ctrl+c":
-		return m, tea.Quit
+		if m.quitting && time.Since(m.quitTime) < 3*time.Second {
+			return m, tea.Quit
+		}
+		m.quitting = true
+		m.quitTime = time.Now()
+		return m, nil
 	case "v":
 		if m.ViewMode == "treemap" {
 			m.ViewMode = "burst"
 		} else {
 			m.ViewMode = "treemap"
 		}
+		return m, nil
+	case "[", "<", "p":
+		m.burstList.CursorUp()
+		m.AutoScroll = false
+		m.vp.GotoTop()
+		m.refreshViewport()
+		return m, nil
+	case "]", ">", "n":
+		m.burstList.CursorDown()
+		m.AutoScroll = false
+		m.vp.GotoTop()
+		m.refreshViewport()
 		return m, nil
 	case "s":
 		if m.ViewMode != "sessions" {
@@ -372,15 +390,5 @@ func handleKey(m Model, msg tea.KeyMsg) (Model, tea.Cmd) {
 }
 
 func copyToClipboard(s string) {
-	for _, args := range [][]string{
-		{"xclip", "-selection", "clipboard"},
-		{"xsel", "--clipboard", "--input"},
-		{"wl-copy"},
-	} {
-		c := exec.Command(args[0], args[1:]...)
-		c.Stdin = strings.NewReader(s)
-		if c.Run() == nil {
-			return
-		}
-	}
+	clipboard.WriteAll(s)
 }

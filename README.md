@@ -2,28 +2,15 @@
   <img src="logo.png?v=2" width="300" alt="Ghostlog Logo">
 </p>
 
-<p align="center">
-  <video src="https://github.com/salarkhannn/ghostlog/raw/main/demo.mp4" width="100%" autoplay loop muted playsinline></video>
-</p>
+
 
 # ghostlog
 
 A live Terminal UI that watches a Git repository and captures every commit an AI coding agent makes — in real-time.
 
-```text
-[AGENT SPEED: 12.0 commits/min] | SESSION: 00:03:12 | watching /path/to/repo
-┌──────────────────────────────────────┐┌───────────────────────────────────────────────────┐
-│ [#1] 3 commits in <1s  [OK]          ││ commit a1b2c3d4                                   │
-│   +142 -0 (8.2kb) across 4 files     ││ Author: Claude <agent@cursor.sh>                  │
-│                                      ││                                                   │
-│> [#2] 7 commits in 12s  [!!]         ││ diff --git a/internal/server/handler.go b/...     │
-│   +380 -44 (22.0kb) across 9 files   ││ @@ -0,0 +1,42 @@                                 │
-│                                      ││ +func (s *Server) handleShorten(w http.Re...      │
-│ [#3] 1 commits in <1s  [OK]          ││ +    if r.Method != http.MethodPost {             │
-│   +12 -3 (800b) across 2 files       ││ +        http.Error(w, "method not allowed"...    │
-└──────────────────────────────────────┘└───────────────────────────────────────────────────┘
-Total: +534 -47 | 3 bursts | auto: on | [a]uto / [c]opy / [q]uit
-```
+<p align="center">
+  <video src="https://github.com/salarkhannn/ghostlog/raw/main/demo.mp4" width="100%" autoplay loop muted playsinline></video>
+</p>
 
 ## Installation
 

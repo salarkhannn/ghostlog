@@ -12,6 +12,12 @@ import (
 	"github.com/salarkhannn/ghostlog/internal/watcher"
 )
 
+var (
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
+)
+
 func main() {
 	if len(os.Args) > 1 && !strings.HasPrefix(os.Args[1], "-") {
 		switch os.Args[1] {
@@ -26,7 +32,14 @@ func main() {
 
 	repoPath := flag.String("repo", ".", "path to git repository to watch")
 	iconsFlag := flag.String("icons", "", "icon mode: emoji, nerd, none")
+	versionFlag := flag.Bool("v", false, "print version")
+	versionLongFlag := flag.Bool("version", false, "print version")
 	flag.Parse()
+
+	if *versionFlag || *versionLongFlag {
+		fmt.Printf("ghostlog %s, commit %s, built at %s\n", version, commit, date)
+		return
+	}
 
 	abs, err := filepath.Abs(*repoPath)
 	if err != nil {

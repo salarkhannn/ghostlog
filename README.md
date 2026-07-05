@@ -67,13 +67,16 @@ ghostlog check -session /path/to/project -fail-on complexity,coverage -max-compl
 
 | Key | Action |
 |-----|--------|
-| `j` / `↓` | Select next burst |
-| `k` / `↑` | Select previous burst |
+| `Tab` | Switch focus between Burst List and Diff Viewport |
+| `j` / `↓` | Scroll selected pane down |
+| `k` / `↑` | Scroll selected pane up |
+| `p` / `n` / `[` / `]` | Cycle through bursts globally (previous/next) |
 | `Ctrl+D` / `PgDn` | Scroll diff down |
 | `Ctrl+U` / `PgUp` | Scroll diff up |
 | `a` | Toggle auto-scroll (follows newest burst) |
 | `c` | Copy commit hashes of selected burst to clipboard |
 | `v` | Toggle file-flash treemap view |
+| `s` | Open the Session Manager |
 | `q` / `Ctrl+C` | Quit |
 
 ## Concepts

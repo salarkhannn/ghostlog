@@ -52,12 +52,6 @@ fi
 
 chmod +x "$INSTALL_DIR/ghostlog"
 
-echo ""
-echo "=========================================="
-echo "✨ ghostlog installed successfully!"
-echo "=========================================="
-echo "Run 'ghostlog' in your terminal to start."
-
 cat << 'EOF'
                      XX$X$$$$&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&                          
                   &X$&&&&&$+:                          +                & &  &                    
@@ -104,3 +98,9 @@ cat << 'EOF'
                     &      +:    . .  +       +       X&.&         &&&&&                          
                                                          &   &&&&&.+ &                            
 EOF
+
+echo ""
+echo "=========================================="
+echo "✨ ghostlog installed successfully!"
+echo "=========================================="
+echo "Run 'ghostlog' in your terminal to start."
